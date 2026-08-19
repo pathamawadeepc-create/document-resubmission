@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Case Detail</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Segoe UI, Tahoma, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+        }
+
+
+        /* =========================
+           Sidebar
+        ========================= */
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #0f172a;
+            color: #fff;
+            position: fixed;
+        }
+
+        .logo {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #dc2626;
+        }
+
+
+        /* =========================
+           Main
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =========================
+           Case Detail
+        ========================= */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-item div {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           Table
+        ========================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 6px 10px;
+        }
+
+        table input[type="checkbox"] {
+            width: 12px;
+            height: 12px;
+            margin-right: 4px;
+            cursor: pointer;
+        }
+
+        table select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           Note
+        ========================= */
+
+        .note-box {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            resize: none;
+        }
+
+
+        /* =========================
+           Buttons
+        ========================= */
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 6px;
+            padding: 12px 18px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-red {
+            background: #dc2626;
+        }
+
+        .btn-green {
+            background: #16a34a;
+        }
+
+        .btn-blue {
+            background: #2563eb;
+        }
+
+
+        /* =========================
+           Tabs
+        ========================= */
+
+        .tabs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #e5e7eb;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+
+        /* =========================
+           Status Progress
+        ========================= */
+
+        .status-progress {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+            cursor: pointer;
+        }
+
+        .status-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #d1d5db;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 300;
+            z-index: 2;
+        }
+
+        .status-label {
+            margin-top: 3px;
+            font-size: 10px;
+            color: #666;
+        }
+
+
+        /* =========================
+           Current Status
+        ========================= */
+
+        .status-step.active .status-circle {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .status-step.active .status-label {
+            color: #333;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           Previous Status
+        ========================= */
+
+        .status-step.completed .status-circle {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .status-step.completed .status-label {
+            color: #333;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           Status Line
+        ========================= */
+
+        .status-line {
+            width: 60px;
+            height: 3px;
+            background: #d1d5db;
+            margin-top: 14px;
+            flex: none;
+        }
+
+        .status-line.completed {
+            background: #dc2626;
+        }
+
+
+        /* =========================
+           Document + Note
+        ========================= */
+
+        .document-note-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .document-note-grid .section {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           History
+        ========================= */
+
+        #history thead th {
+            text-align: left;
+        }
+
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .document-note-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         Sidebar
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            AIRA & AIFUL
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="new.html" id="menu-new">
+                New
+            </a>
+
+            <a href="requested.html" id="menu-requested">
+                Requested
+            </a>
+
+            <a href="submitted.html" id="menu-submitted">
+                Submitted
+            </a>
+
+            <a href="done.html" id="menu-done">
+                Done
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         Main
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- =========================
+             Tabs
+        ========================= -->
+
+        <div class="tabs">
+
+            <button
+                class="tab-btn active"
+                onclick="openTab('caseinfo', this)"
+            >
+                Case Info
+            </button>
+
+            <button
+                class="tab-btn"
+                onclick="openTab('history', this)"
+            >
+                Activity History
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             CASE INFO
+        ========================= -->
+
+        <div id="caseinfo" class="tab-content active">
+
+
+            <!-- =========================
+                 Status Progress
+            ========================= -->
+
+            <div class="status-progress">
+
+
+                <!-- 1 New -->
+
+                <div
+                    class="status-step"
+                    onclick="setStatus(1)"
+                >
+
+                    <div class="status-circle">
+                        1
+                    </div>
+
+                    <div class="status-label">
+                        New
+                    </div>
+
+                </div>
+
+
+                <div class="status-line"></div>
+
+
+                <!-- 2 Requested -->
+
+                <div
+                    class="status-step"
+                    onclick="setStatus(2)"
+                >
+
+                    <div class="status-circle">
+                        2
+                    </div>
+
+                    <div class="status-label">
+                        Requested
+                    </div>
+
+                </div>
+
+
+                <div class="status-line"></div>
+
+
+                <!-- 3 Submitted -->
+
+                <div
+                    class="status-step"
+                    onclick="setStatus(3)"
+                >
+
+                    <div class="status-circle">
+                        3
+                    </div>
+
+                    <div class="status-label">
+                        Submitted
+                    </div>
+
+                </div>
+
+
+                <div class="status-line"></div>
+
+
+                <!-- 4 Done -->
+
+                <div
+                    class="status-step"
+                    onclick="setStatus(4)"
+                >
+
+                    <div class="status-circle">
+                        4
+                    </div>
+
+                    <div class="status-label">
+                        Done
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Case Detail
+            ========================= -->
+
+            <div class="section">
+
+                <h3>
+                    Case Detail
+                </h3>
+
+                <br>
+
+
+                <div class="info-grid">
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Register Date
+                        </label>
+
+                        <div id="registerDate">
+                            14/08/2569 12:04
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Customer No
+                        </label>
+
+                        <div id="idCard">
+                            300000000x
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Customer Name
+                        </label>
+
+                        <div id="customerName">
+                            xxxxx xxxxx
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <div id="phoneNumber">
+                            xxx-xxx-xxxx
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Review Date (กด hold ใน LOS)
+                        </label>
+
+                        <div id="holdDate">
+                            15/08/2569 09:35
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Aging (นับตั้งแต่ hold ตาม Calendar)
+                        </label>
+
+                        <div id="aging">
+                            2 Days
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Request Count (ID)
+                        </label>
+
+                        <div id="requestCount">
+                            01
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Submission Count
+                        </label>
+
+                        <div id="submissionCount">
+                            00
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Requested Documents + Note
+            ========================= -->
+
+            <div class="document-note-grid">
+
+
+                <!-- Requested Documents -->
+
+                <div class="section">
+
+                    <h3>
+                        Requested Documents
+                    </h3>
+
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Document Type*
+                                </th>
+
+                                <th>
+                                    Reason*
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <!-- Statement -->
+
+                            <tr>
+
+                                <td>
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            id="doc_statement"
+                                            name="document"
+                                            value="statement"
+                                        >
+
+                                        Statement
+
+                                    </label>
+
+                                </td>
+
+
+                                <td>
+
+                                    <select
+                                        id="reason_statement"
+                                        name="reason_statement"
+                                    >
+
+                                        <option value="">
+                                            -- Select Reason --
+                                        </option>
+
+                                        <option value="incomplete">
+                                            Statement ย้อนหลังไม่ครบ 3 เดือน
+                                        </option>
+
+                                        <option value="unclear">
+                                            เอกสารไม่ชัดเจน
+                                        </option>
+
+                                        <option value="expired">
+                                            เอกสารหมดอายุ
+                                        </option>
+
+                                        <option value="additional">
+                                            ขอเอกสารเพิ่มเติม
+                                        </option>
+
+                                    </select>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- Payslip -->
+
+                            <tr>
+
+                                <td>
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            id="doc_payslip"
+                                            name="document"
+                                            value="payslip"
+                                        >
+
+                                        สลิปเงินเดือน
+
+                                    </label>
+
+                                </td>
+
+
+                                <td>
+
+                                    <select
+                                        id="reason_payslip"
+                                        name="reason_payslip"
+                                    >
+
+                                        <option value="">
+                                            -- Select Reason --
+                                        </option>
+
+                                        <option value="incomplete">
+                                            เอกสารไม่ครบถ้วน
+                                        </option>
+
+                                        <option value="unclear">
+                                            เอกสารไม่ชัดเจน
+                                        </option>
+
+                                        <option value="expired">
+                                            เอกสารหมดอายุ
+                                        </option>
+
+                                        <option value="additional">
+                                            ขอเอกสารเพิ่มเติม
+                                        </option>
+
+                                    </select>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- Bankbook -->
+
+                            <tr>
+
+                                <td>
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            id="doc_bankbook"
+                                            name="document"
+                                            value="bankbook"
+                                        >
+
+                                        หน้าสมุดบัญชีธนาคาร
+
+                                    </label>
+
+                                </td>
+
+
+                                <td>
+
+                                    <select
+                                        id="reason_bankbook"
+                                        name="reason_bankbook"
+                                    >
+
+                                        <option value="">
+                                            -- Select Reason --
+                                        </option>
+
+                                        <option value="incomplete">
+                                            เอกสารไม่ครบถ้วน
+                                        </option>
+
+                                        <option value="unclear">
+                                            เอกสารไม่ชัดเจน
+                                        </option>
+
+                                        <option value="expired">
+                                            เอกสารหมดอายุ
+                                        </option>
+
+                                        <option value="additional">
+                                            ขอเอกสารเพิ่มเติม
+                                        </option>
+
+                                    </select>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ID Card -->
+
+                            <tr>
+
+                                <td>
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            id="doc_id_card"
+                                            name="document"
+                                            value="id_card"
+                                        >
+
+                                        สำเนาบัตรประชาชน
+
+                                    </label>
+
+                                </td>
+
+
+                                <td>
+
+                                    <select
+                                        id="reason_id_card"
+                                        name="reason_id_card"
+                                    >
+
+                                        <option value="">
+                                            -- Select Reason --
+                                        </option>
+
+                                        <option value="incomplete">
+                                            เอกสารไม่ครบถ้วน
+                                        </option>
+
+                                        <option value="unclear">
+                                            เอกสารไม่ชัดเจน
+                                        </option>
+
+                                        <option value="expired">
+                                            เอกสารหมดอายุ
+                                        </option>
+
+                                        <option value="additional">
+                                            ขอเอกสารเพิ่มเติม
+                                        </option>
+
+                                    </select>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =========================
+                     Note
+                ========================= -->
+
+                <div class="section">
+
+                    <h3>
+                        Note
+                    </h3>
+
+                    <br>
+
+                    <textarea
+                        id="caseNote"
+                        class="note-box"
+                        placeholder="เพิ่มหมายเหตุ..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================
+                 Actions
+            ========================= -->
+
+            <br>
+
+
+            <div class="button-group">
+
+                <button
+                    class="btn btn-red"
+                    onclick="resetForm()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    class="btn btn-green"
+                    onclick="confirmRequest()"
+                >
+                    Request
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ACTIVITY HISTORY
+        ========================= -->
+
+        <div id="history" class="tab-content">
+
+
+            <div class="section">
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Datetime
+                            </th>
+
+                            <th>
+                                Activity
+                            </th>
+
+                            <th>
+                                Agent
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                16/08/2569 18:08
+                            </td>
+
+                            <td>
+                                Status: Submitted #2
+                            </td>
+
+                            <td>
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                16/08/2569 11:55
+                            </td>
+
+                            <td>
+                                Status: Request #2 แนบรายละเอียด Document Type, Reason, Note
+                            </td>
+
+                            <td>
+                                Agent001
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                15/08/2569 14:08
+                            </td>
+
+                            <td>
+                                Status: Submitted #1
+                            </td>
+
+                            <td>
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                15/08/2569 09:35
+                            </td>
+
+                            <td>
+                                Status: Request #1 แนบรายละเอียด Document Type, Reason, Note
+                            </td>
+
+                            <td>
+                                Agent001
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                14/08/2569 12:04
+                            </td>
+
+                            <td>
+                                Status: New
+                            </td>
+
+                            <td>
+                                -
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+
+        /* =========================
+           Tab Function
+        ========================= */
+
+        function openTab(tabId, btn) {
+
+            document
+                .querySelectorAll('.tab-content')
+                .forEach(x => {
+
+                    x.classList.remove('active');
+
+                });
+
+
+            document
+                .querySelectorAll('.tab-btn')
+                .forEach(x => {
+
+                    x.classList.remove('active');
+
+                });
+
+
+            document
+                .getElementById(tabId)
+                .classList.add('active');
+
+
+            btn.classList.add('active');
+
+        }
+
+
+
+        /* =========================
+           Status Function
+        ========================= */
+
+        function setStatus(status) {
+
+
+            const steps =
+                document.querySelectorAll('.status-step');
+
+
+            const lines =
+                document.querySelectorAll('.status-line');
+
+
+            /* =========================
+               Reset Status Bar
+            ========================= */
+
+            steps.forEach(step => {
+
+                step.classList.remove('active');
+                step.classList.remove('completed');
+
+            });
+
+
+            lines.forEach(line => {
+
+                line.classList.remove('completed');
+
+            });
+
+
+
+            /* =========================
+               Update Status Bar
+            ========================= */
+
+            steps.forEach((step, index) => {
+
+                const stepNumber = index + 1;
+
+
+                if (stepNumber < status) {
+
+                    step.classList.add('completed');
+
+                }
+
+
+                if (stepNumber === status) {
+
+                    step.classList.add('active');
+
+                }
+
+            });
+
+
+
+            /* =========================
+               Update Status Lines
+            ========================= */
+
+            lines.forEach((line, index) => {
+
+                if (index < status - 1) {
+
+                    line.classList.add('completed');
+
+                }
+
+            });
+
+
+
+            /* =========================
+               Update Sidebar
+            ========================= */
+
+            const menuItems = [
+
+                'menu-new',
+                'menu-requested',
+                'menu-submitted',
+                'menu-done'
+
+            ];
+
+
+            menuItems.forEach(id => {
+
+                document
+                    .getElementById(id)
+                    .classList.remove('active');
+
+            });
+
+
+            document
+                .getElementById(menuItems[status - 1])
+                .classList.add('active');
+
+
+
+            /* =========================
+               Load Data
+            ========================= */
+
+            if (status === 1) {
+
+                loadNewData();
+
+            }
+
+
+            if (status === 2) {
+
+                loadRequestedData();
+
+            }
+
+
+            if (status === 3) {
+
+                loadSubmittedData();
+
+            }
+
+
+            if (status === 4) {
+
+                loadDoneData();
+
+            }
+
+        }
+
+
+
+        /* =========================
+           New
+        ========================= */
+
+        function loadNewData() {
+
+            document.getElementById("registerDate").textContent =
+                "14/08/2569 12:04";
+
+            document.getElementById("idCard").textContent =
+                "300000000x";
+
+            document.getElementById("customerName").textContent =
+                "xxxxx xxxxx";
+
+            document.getElementById("phoneNumber").textContent =
+                "xxx-xxx-xxxx";
+
+            document.getElementById("holdDate").textContent =
+                "15/08/2569 09:35";
+
+            document.getElementById("aging").textContent =
+                "1 Day";
+
+            document.getElementById("requestCount").textContent =
+                "00";
+
+            document.getElementById("submissionCount").textContent =
+                "00";
+
+            clearDocuments();
+
+            document.getElementById("caseNote").value =
+                "";
+
+        }
+
+
+
+        /* =========================
+           Requested
+        ========================= */
+
+        function loadRequestedData() {
+
+            document.getElementById("registerDate").textContent =
+                "14/08/2569 12:04";
+
+            document.getElementById("idCard").textContent =
+                "300000000x";
+
+            document.getElementById("customerName").textContent =
+                "xxxxx xxxxx";
+
+            document.getElementById("phoneNumber").textContent =
+                "xxx-xxx-xxxx";
+
+            document.getElementById("holdDate").textContent =
+                "15/08/2569 09:35";
+
+            document.getElementById("aging").textContent =
+                "2 Days";
+
+            document.getElementById("requestCount").textContent =
+                "01";
+
+            document.getElementById("submissionCount").textContent =
+                "00";
+
+            clearDocuments();
+
+            document.getElementById("doc_statement").checked =
+                true;
+
+            document.getElementById("reason_statement").value =
+                "unclear";
+
+            document.getElementById("doc_payslip").checked =
+                true;
+
+            document.getElementById("reason_payslip").value =
+                "incomplete";
+
+            document.getElementById("caseNote").value =
+                "เอกสารไม่ชัดเจนและเอกสารไม่ครบถ้วน";
+
+        }
+
+
+
+        /* =========================
+           Submitted
+        ========================= */
+
+        function loadSubmittedData() {
+
+            document.getElementById("registerDate").textContent =
+                "14/08/2569 12:04";
+
+            document.getElementById("idCard").textContent =
+                "300000000x";
+
+            document.getElementById("customerName").textContent =
+                "xxxxx xxxxx";
+
+            document.getElementById("phoneNumber").textContent =
+                "xxx-xxx-xxxx";
+
+            document.getElementById("holdDate").textContent =
+                "15/08/2569 09:35";
+
+            document.getElementById("aging").textContent =
+                "2 Days";
+
+            document.getElementById("requestCount").textContent =
+                "01";
+
+            document.getElementById("submissionCount").textContent =
+                "01";
+
+            clearDocuments();
+
+            document.getElementById("doc_statement").checked =
+                true;
+
+            document.getElementById("reason_statement").value =
+                "unclear";
+
+            document.getElementById("doc_payslip").checked =
+                true;
+
+            document.getElementById("reason_payslip").value =
+                "incomplete";
+
+            document.getElementById("caseNote").value =
+                "ลูกค้าส่งเอกสารเพิ่มเติมแล้ว";
+
+        }
+
+
+
+        /* =========================
+           Done
+        ========================= */
+
+        function loadDoneData() {
+
+            document.getElementById("registerDate").textContent =
+                "14/08/2569 12:04";
+
+            document.getElementById("idCard").textContent =
+                "300000000x";
+
+            document.getElementById("customerName").textContent =
+                "xxxxx xxxxx";
+
+            document.getElementById("phoneNumber").textContent =
+                "xxx-xxx-xxxx";
+
+            document.getElementById("holdDate").textContent =
+                "15/08/2569 09:35";
+
+            document.getElementById("aging").textContent =
+                "2 Days";
+
+            document.getElementById("requestCount").textContent =
+                "01";
+
+            document.getElementById("submissionCount").textContent =
+                "01";
+
+            clearDocuments();
+
+            document.getElementById("doc_statement").checked =
+                true;
+
+            document.getElementById("reason_statement").value =
+                "unclear";
+
+            document.getElementById("doc_payslip").checked =
+                true;
+
+            document.getElementById("reason_payslip").value =
+                "incomplete";
+
+            document.getElementById("caseNote").value =
+                "Case completed";
+
+        }
+
+
+
+        /* =========================
+           Clear Documents
+        ========================= */
+
+        function clearDocuments() {
+
+            document
+                .querySelectorAll('input[type="checkbox"]')
+                .forEach(item => {
+
+                    item.checked = false;
+
+                });
+
+
+            document
+                .querySelectorAll('select')
+                .forEach(item => {
+
+                    item.selectedIndex = 0;
+
+                });
+
+        }
+
+
+
+        /* =========================
+           Confirm Request
+        ========================= */
+
+        function confirmRequest() {
+
+            const confirmed =
+                confirm(
+                    "ยืนยันการส่งคำขอเอกสารเพิ่มเติมใช่หรือไม่?"
+                );
+
+
+            if (confirmed) {
+
+                alert("ส่งคำขอเรียบร้อย");
+
+            }
+
+        }
+
+
+
+        /* =========================
+           Reset Form
+        ========================= */
+
+        function resetForm() {
+
+            document
+                .querySelectorAll('input[type="checkbox"]')
+                .forEach(item => {
+
+                    item.checked = false;
+
+                });
+
+
+            document
+                .querySelectorAll('select')
+                .forEach(item => {
+
+                    item.selectedIndex = 0;
+
+                });
+
+
+            document
+                .querySelectorAll('.note-box')
+                .forEach(item => {
+
+                    item.value = '';
+
+                });
+
+        }
+
+        setStatus(2);
+
+    </script>
+
+</body>
+
+</html>
