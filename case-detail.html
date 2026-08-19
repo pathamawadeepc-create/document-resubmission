@@ -150,6 +150,39 @@
             resize: none;
         }
 
+        /* =========================
+           Read-only Fields
+        ========================= */
+
+        .readonly-field {
+            background: #f8fafc;
+            color: #475569;
+            cursor: not-allowed;
+        }
+
+        .readonly-field:disabled {
+            opacity: 1;
+        }
+
+        select.readonly-field {
+            cursor: not-allowed;
+        }
+
+        textarea.readonly-field {
+            background: #f8fafc;
+            cursor: not-allowed;
+        }
+
+        /* =========================
+           Disabled Actions
+        ========================= */
+
+        .btn-readonly {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
 
         /* =========================
            Buttons
@@ -700,7 +733,7 @@
                                             id="doc_statement"
                                             name="document"
                                             value="statement"
-                                        >
+                                         class="readonly-field" disabled>
 
                                         Statement
 
@@ -714,7 +747,7 @@
                                     <select
                                         id="reason_statement"
                                         name="reason_statement"
-                                    >
+                                     class="readonly-field" disabled>
 
                                         <option value="">
                                             -- Select Reason --
@@ -756,7 +789,7 @@
                                             id="doc_payslip"
                                             name="document"
                                             value="payslip"
-                                        >
+                                         class="readonly-field" disabled>
 
                                         สลิปเงินเดือน
 
@@ -770,7 +803,7 @@
                                     <select
                                         id="reason_payslip"
                                         name="reason_payslip"
-                                    >
+                                     class="readonly-field" disabled>
 
                                         <option value="">
                                             -- Select Reason --
@@ -812,7 +845,7 @@
                                             id="doc_bankbook"
                                             name="document"
                                             value="bankbook"
-                                        >
+                                         class="readonly-field" disabled>
 
                                         หน้าสมุดบัญชีธนาคาร
 
@@ -826,7 +859,7 @@
                                     <select
                                         id="reason_bankbook"
                                         name="reason_bankbook"
-                                    >
+                                     class="readonly-field" disabled>
 
                                         <option value="">
                                             -- Select Reason --
@@ -868,7 +901,7 @@
                                             id="doc_id_card"
                                             name="document"
                                             value="id_card"
-                                        >
+                                         class="readonly-field" disabled>
 
                                         สำเนาบัตรประชาชน
 
@@ -882,7 +915,7 @@
                                     <select
                                         id="reason_id_card"
                                         name="reason_id_card"
-                                    >
+                                     class="readonly-field" disabled>
 
                                         <option value="">
                                             -- Select Reason --
@@ -932,8 +965,9 @@
 
                     <textarea
                         id="caseNote"
-                        class="note-box"
+                        class="note-box readonly-field"
                         placeholder="เพิ่มหมายเหตุ..."
+                        readonly
                     ></textarea>
 
                 </div>
@@ -952,16 +986,18 @@
             <div class="button-group">
 
                 <button
-                    class="btn btn-red"
-                    onclick="resetForm()"
+                    class="btn btn-red btn-readonly"
+                    type="button"
+                    disabled
                 >
                     Cancel
                 </button>
 
 
                 <button
-                    class="btn btn-green"
-                    onclick="confirmRequest()"
+                    class="btn btn-green btn-readonly"
+                    type="button"
+                    disabled
                 >
                     Request
                 </button>
