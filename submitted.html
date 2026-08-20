@@ -63,31 +63,66 @@ body {
 
 
 /* =========================
-   TABLE HEADER
+   PAGE TITLE
 ========================= */
 
-.table-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 15px;
+.page-title {
+    margin-bottom: 20px;
 }
 
-.filter-group {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+.page-title h2 {
+    margin: 0;
 }
 
 
 /* =========================
-   SEARCH FIELD
+   TABLE HEADER
+========================= */
+
+.table-header {
+    background: #fff;
+
+    padding: 20px;
+
+    border-radius: 10px 10px 0 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.table-header h3 {
+    margin: 0;
+}
+
+
+/* =========================
+   FILTER GROUP
+========================= */
+
+.filter-group {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================
+   SEARCH FIELD DROPDOWN
 ========================= */
 
 .search-field {
+
     padding: 9px 12px;
 
     border: 1px solid #ddd;
+
     border-radius: 6px;
 
     background: #fff;
@@ -96,11 +131,9 @@ body {
 
     cursor: pointer;
 
-    outline: none;
-}
+    min-width: 160px;
 
-.search-field:focus {
-    border-color: #2563eb;
+    outline: none;
 }
 
 
@@ -109,11 +142,13 @@ body {
 ========================= */
 
 .search-input {
+
     width: 250px;
 
     padding: 9px 12px;
 
     border: 1px solid #ddd;
+
     border-radius: 6px;
 
     font-size: 10px;
@@ -122,15 +157,18 @@ body {
 }
 
 .search-input:focus {
+
     border-color: #2563eb;
+
 }
 
 
 /* =========================
-   CLEAR FILTER BUTTON
+   CLEAR FILTER
 ========================= */
 
 .clear-btn {
+
     padding: 9px 14px;
 
     border: 1px solid #dc2626;
@@ -143,14 +181,17 @@ body {
 
     font-size: 10px;
 
-    cursor: pointer;
+    font-weight: 600;
 
-    transition: 0.2s;
+    cursor: pointer;
 }
 
 .clear-btn:hover {
+
     background: #dc2626;
+
     color: #fff;
+
 }
 
 
@@ -158,17 +199,34 @@ body {
    TABLE
 ========================= */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.table-wrap {
+
     background: #fff;
+
+    padding: 0 20px 20px 20px;
+
+    border-radius: 0 0 10px 10px;
 }
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
 
 th,
 td {
+
     padding: 12px;
+
     border-bottom: 1px solid #eee;
+
     text-align: left;
+
 }
 
 
@@ -177,18 +235,29 @@ td {
 ========================= */
 
 .sortable {
+
     cursor: pointer;
+
     user-select: none;
+
 }
+
 
 .sortable:hover {
-    background: #f1f5f9;
+
+    background: #f3f4f6;
+
 }
 
+
 .sort-icon {
-    font-size: 11px;
+
+    font-size: 12px;
+
     margin-left: 5px;
+
     color: #666;
+
 }
 
 
@@ -197,28 +266,47 @@ td {
 ========================= */
 
 .badge {
+
     padding: 5px 10px;
+
     border-radius: 20px;
+
     font-size: 12px;
+
 }
+
 
 .new {
+
     background: #dbeafe;
+
     color: #1d4ed8;
+
 }
+
 
 .req {
+
     background: #fef3c7;
+
     color: #92400e;
+
 }
+
 
 .sub {
+
     background: #dcfce7;
+
     color: #166534;
+
 }
 
+
 .done {
+
     background: #e5e7eb;
+
 }
 
 
@@ -227,24 +315,68 @@ td {
 ========================= */
 
 td a {
+
     color: #2563eb;
+
     text-decoration: none;
+
 }
 
+
 td a:hover {
+
     text-decoration: underline;
+
 }
 
 
 /* =========================
-   EMPTY RESULT
+   NO RESULT
 ========================= */
 
 .no-result {
-    text-align: center;
-    color: #777;
-    padding: 20px;
+
     display: none;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #777;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .table-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .filter-group {
+
+        width: 100%;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .search-input {
+
+        width: 220px;
+
+    }
+
 }
 
 </style>
@@ -265,23 +397,28 @@ td a:hover {
         AIRA & AIFUL
     </div>
 
+
     <div class="menu">
 
         <a href="dashboard.html">
             Dashboard
         </a>
 
+
         <a href="new.html">
             New
         </a>
+
 
         <a href="requested.html">
             Requested
         </a>
 
+
         <a class="active">
             Submitted
         </a>
+
 
         <a href="done.html">
             Done
@@ -299,21 +436,39 @@ td a:hover {
 
 <div class="main">
 
-    <h2>
-        Submitted Cases
-    </h2>
+
+    <!-- =========================
+         PAGE TITLE
+    ========================= -->
+
+    <div class="page-title">
+
+        <h2>
+            Submitted Cases
+        </h2>
+
+    </div>
+
 
 
     <!-- =========================
-         FILTER
+         TABLE HEADER
     ========================= -->
 
     <div class="table-header">
 
+
+        <h3>
+            Case List
+        </h3>
+
+
         <div class="filter-group">
 
 
-            <!-- FIELD DROPDOWN -->
+            <!-- =========================
+                 SEARCH FIELD
+            ========================= -->
 
             <select
                 id="searchField"
@@ -344,7 +499,10 @@ td a:hover {
             </select>
 
 
-            <!-- SEARCH -->
+
+            <!-- =========================
+                 SEARCH
+            ========================= -->
 
             <input
                 type="text"
@@ -356,7 +514,10 @@ td a:hover {
             >
 
 
-            <!-- CLEAR -->
+
+            <!-- =========================
+                 CLEAR FILTER
+            ========================= -->
 
             <button
                 type="button"
@@ -365,6 +526,7 @@ td a:hover {
             >
                 Clear Filter
             </button>
+
 
         </div>
 
@@ -376,128 +538,143 @@ td a:hover {
          TABLE
     ========================= -->
 
-    <table id="caseTable">
-
-        <thead>
-
-            <tr>
+    <div class="table-wrap">
 
 
-                <!-- Register Date -->
+        <table id="caseTable">
 
-                <th
-                    class="sortable"
-                    onclick="sortTable(0, 'date')"
-                >
 
-                    Register Date
+            <thead>
 
-                    <span
-                        id="sortIcon0"
-                        class="sort-icon"
+                <tr>
+
+
+                    <!-- REGISTER DATE -->
+
+                    <th
+                        class="sortable"
+                        onclick="sortTable('registerDate')"
                     >
-                        ↕
-                    </span>
 
-                </th>
+                        Register Date
 
+                        <span
+                            id="sort-registerDate"
+                            class="sort-icon"
+                        >
+                            ↕
+                        </span>
 
-                <!-- Customer No -->
-
-                <th>
-                    Customer No
-                </th>
-
-
-                <!-- Customer Name -->
-
-                <th>
-                    Customer Name
-                </th>
+                    </th>
 
 
-                <!-- Status -->
 
-                <th>
-                    Status
-                </th>
+                    <!-- CUSTOMER NO -->
+
+                    <th>
+                        Customer No
+                    </th>
 
 
-                <!-- Request Count -->
 
-                <th
-                    class="sortable"
-                    onclick="sortTable(4, 'number')"
-                >
+                    <!-- CUSTOMER NAME -->
 
-                    Request Count
+                    <th>
+                        Customer Name
+                    </th>
 
-                    <span
-                        id="sortIcon4"
-                        class="sort-icon"
+
+
+                    <!-- STATUS -->
+
+                    <th>
+                        Status
+                    </th>
+
+
+
+                    <!-- REQUEST COUNT -->
+
+                    <th
+                        class="sortable"
+                        onclick="sortTable('requestCount')"
                     >
-                        ↕
-                    </span>
 
-                </th>
+                        Request Count
+
+                        <span
+                            id="sort-requestCount"
+                            class="sort-icon"
+                        >
+                            ↕
+                        </span>
+
+                    </th>
 
 
-                <!-- Submission Count -->
 
-                <th>
-                    Submission Count
-                </th>
+                    <!-- SUBMISSION COUNT -->
+
+                    <th>
+                        Submission Count
+                    </th>
 
 
-                <!-- Case Aging -->
 
-                <th
-                    class="sortable"
-                    onclick="sortTable(6, 'number')"
-                >
+                    <!-- CASE AGING -->
 
-                    Aging
-
-                    <span
-                        id="sortIcon6"
-                        class="sort-icon"
+                    <th
+                        class="sortable"
+                        onclick="sortTable('caseAging')"
                     >
-                        ↕
-                    </span>
 
-                </th>
+                        Case Aging
+
+                        <span
+                            id="sort-caseAging"
+                            class="sort-icon"
+                        >
+                            ↕
+                        </span>
+
+                    </th>
 
 
-                <!-- Submit Date -->
 
-                <th
-                    class="sortable"
-                    onclick="sortTable(7, 'datetime')"
-                >
+                    <!-- REQUEST DATE -->
 
-                    Submit Date
-
-                    <span
-                        id="sortIcon7"
-                        class="sort-icon"
+                    <th
+                        class="sortable"
+                        onclick="sortTable('requestDate')"
                     >
-                        ↕
-                    </span>
 
-                </th>
+                        Request Date
 
+                        <span
+                            id="sort-requestDate"
+                            class="sort-icon"
+                        >
+                            ↕
+                        </span>
 
-                <th></th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody>
+                    </th>
 
 
-            <!-- =========================
+
+                    <th>
+                    </th>
+
+
+                </tr>
+
+            </thead>
+
+
+
+            <tbody>
+
+
+              <!-- =========================
                  CASE 1
             ========================= -->
 
