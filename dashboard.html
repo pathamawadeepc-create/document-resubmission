@@ -80,18 +80,12 @@ body {
 .guide-btn {
     background: #ffffff;
     color: #dc2626;
-
     border: 1px solid #dc2626;
-
     padding: 9px 16px;
-
     border-radius: 6px;
-
     text-decoration: none;
-
     font-size: 14px;
     font-weight: 600;
-
     transition: 0.2s;
 }
 
@@ -323,7 +317,9 @@ td {
 <div class="main">
 
 
-    <!-- PAGE HEADER -->
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
 
     <div class="page-header">
 
@@ -402,7 +398,6 @@ td {
     </div>
 
 
-
     <!-- =========================
          CASE TABLE
     ========================= -->
@@ -420,6 +415,8 @@ td {
             <div class="filter-group">
 
 
+                <!-- SEARCH -->
+
                 <input
                     type="text"
                     id="caseSearch"
@@ -428,6 +425,8 @@ td {
                     onkeyup="filterCases()"
                 >
 
+
+                <!-- STATUS FILTER -->
 
                 <select
                     id="statusFilter"
@@ -462,6 +461,9 @@ td {
         </div>
 
 
+        <!-- =========================
+             TABLE
+        ========================= -->
 
         <table id="caseTable">
 
@@ -520,9 +522,11 @@ td {
             <tbody>
 
 
-                <!-- CASE 1 -->
+                <!-- =========================
+                     CASE 1 - SUBMITTED
+                ========================= -->
 
-                <tr>
+                <tr data-status="Submitted">
 
                     <td>
                         10/08/2569
@@ -561,10 +565,11 @@ td {
                 </tr>
 
 
+                <!-- =========================
+                     CASE 2 - REQUESTED
+                ========================= -->
 
-                <!-- CASE 2 -->
-
-                <tr>
+                <tr data-status="Requested">
 
                     <td>
                         11/08/2569
@@ -603,10 +608,11 @@ td {
                 </tr>
 
 
+                <!-- =========================
+                     CASE 3 - NEW
+                ========================= -->
 
-                <!-- CASE 3 -->
-
-                <tr>
+                <tr data-status="New">
 
                     <td>
                         18/08/2569
@@ -645,10 +651,11 @@ td {
                 </tr>
 
 
+                <!-- =========================
+                     CASE 4 - DONE
+                ========================= -->
 
-                <!-- CASE 4 -->
-
-                <tr>
+                <tr data-status="Done">
 
                     <td>
                         09/08/2569
@@ -706,17 +713,23 @@ td {
 <script>
 
 
+/* =========================
+   FILTER CASES
+========================= */
+
 function filterCases() {
 
     const searchInput = document
         .getElementById("caseSearch")
         .value
+        .trim()
         .toLowerCase();
 
 
     const statusFilter = document
         .getElementById("statusFilter")
         .value
+        .trim()
         .toLowerCase();
 
 
@@ -728,27 +741,54 @@ function filterCases() {
     rows.forEach(row => {
 
 
+        /* =========================
+           GET ROW DATA
+        ========================= */
+
         const rowText = row
             .textContent
+            .trim()
             .toLowerCase();
 
 
+        /*
+         * IMPORTANT
+         * อ่าน Status จาก data-status
+         * ไม่อ่านจาก Badge
+         */
+
         const status = row
-            .querySelector(".badge")
-            ?.textContent
+            .getAttribute("data-status")
+            ?.trim()
             .toLowerCase() || "";
 
 
+        /* =========================
+           SEARCH MATCH
+        ========================= */
+
         const matchSearch =
+            searchInput === "" ||
             rowText.includes(searchInput);
 
+
+        /* =========================
+           STATUS MATCH
+        ========================= */
 
         const matchStatus =
             statusFilter === "" ||
             status === statusFilter;
 
 
-        if (matchSearch && matchStatus) {
+        /* =========================
+           SHOW / HIDE
+        ========================= */
+
+        if (
+            matchSearch &&
+            matchStatus
+        ) {
 
             row.style.display = "";
 
@@ -763,6 +803,10 @@ function filterCases() {
 }
 
 
+
+/* =========================
+   SORT
+========================= */
 
 let dateSortOrder = "none";
 
@@ -784,6 +828,10 @@ function sortByRegisterDate() {
         );
 
 
+    /* =========================
+       CHANGE SORT ORDER
+    ========================= */
+
     if (
         dateSortOrder === "none" ||
         dateSortOrder === "desc"
@@ -797,6 +845,10 @@ function sortByRegisterDate() {
 
     }
 
+
+    /* =========================
+       SORT ROWS
+    ========================= */
 
     rows.sort((a, b) => {
 
@@ -864,12 +916,20 @@ function sortByRegisterDate() {
     });
 
 
+    /* =========================
+       RE-APPEND SORTED ROWS
+    ========================= */
+
     rows.forEach(row => {
 
         tbody.appendChild(row);
 
     });
 
+
+    /* =========================
+       UPDATE ICON
+    ========================= */
 
     const icon =
         document.getElementById(
