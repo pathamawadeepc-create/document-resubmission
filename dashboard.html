@@ -216,8 +216,38 @@ td {
     align-items: center;
 }
 
+
+/* =========================
+   SEARCH FIELD SELECTOR
+========================= */
+
+.search-field {
+    padding: 9px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    background: #fff;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+.search-field:focus {
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   SEARCH INPUT
+========================= */
+
 .search-input {
     width: 250px;
+
     padding: 9px 12px;
 
     border: 1px solid #ddd;
@@ -231,6 +261,11 @@ td {
 .search-input:focus {
     border-color: #2563eb;
 }
+
+
+/* =========================
+   STATUS FILTER
+========================= */
 
 .status-filter {
     padding: 9px 12px;
@@ -415,46 +450,48 @@ td {
             <div class="filter-group">
 
 
-                <!-- SEARCH -->
+                <!-- =========================
+                     SEARCH FIELD
+                ========================= -->
+
+                <select
+                    id="searchField"
+                    class="search-field"
+                    onchange="changeSearchField()"
+                >
+
+                    <option value="customerNo">
+                        Customer No
+                    </option>
+
+                    <option value="customerName">
+                        Customer Name
+                    </option>
+
+                    <option value="status">
+                        Status
+                    </option>
+
+                    <option value="registerDate">
+                        Register Date
+                    </option>
+
+                </select>
+
+
+                <!-- =========================
+                     SEARCH INPUT
+                ========================= -->
 
                 <input
                     type="text"
                     id="caseSearch"
                     class="search-input"
-                    placeholder="Search Customer Name / Customer No..."
+                    placeholder="Search Customer No..."
                     onkeyup="filterCases()"
                 >
 
 
-                <!-- STATUS FILTER -->
-
-                <select
-                    id="statusFilter"
-                    class="status-filter"
-                    onchange="filterCases()"
-                >
-
-                    <option value="">
-                        All Status
-                    </option>
-
-                    <option value="New">
-                        New
-                    </option>
-
-                    <option value="Requested">
-                        Requested
-                    </option>
-
-                    <option value="Submitted">
-                        Submitted
-                    </option>
-
-                    <option value="Done">
-                        Done
-                    </option>
-
-                </select>
 
             </div>
 
@@ -714,28 +751,100 @@ td {
 
 
 /* =========================
+   CHANGE SEARCH FIELD
+========================= */
+
+function changeSearchField() {
+
+    const field =
+        document.getElementById("searchField").value;
+
+    const searchInput =
+        document.getElementById("caseSearch");
+
+
+    /* =========================
+       CHANGE PLACEHOLDER
+    ========================= */
+
+    if (field === "customerNo") {
+
+        searchInput.placeholder =
+            "Search Customer No...";
+
+    }
+
+    else if (field === "customerName") {
+
+        searchInput.placeholder =
+            "Search Customer Name...";
+
+    }
+
+    else if (field === "status") {
+
+        searchInput.placeholder =
+            "Search Status...";
+
+    }
+
+    else if (field === "registerDate") {
+
+        searchInput.placeholder =
+            "Search Register Date...";
+
+    }
+
+
+    /* =========================
+       CLEAR OLD SEARCH
+    ========================= */
+
+    searchInput.value = "";
+
+
+    /* =========================
+       FILTER AGAIN
+    ========================= */
+
+    filterCases();
+
+}
+
+
+
+/* =========================
    FILTER CASES
 ========================= */
 
 function filterCases() {
 
-    const searchInput = document
-        .getElementById("caseSearch")
-        .value
-        .trim()
-        .toLowerCase();
+    const searchInput =
+        document
+            .getElementById("caseSearch")
+            .value
+            .trim()
+            .toLowerCase();
 
 
-    const statusFilter = document
-        .getElementById("statusFilter")
-        .value
-        .trim()
-        .toLowerCase();
+    const searchField =
+        document
+            .getElementById("searchField")
+            .value;
 
 
-    const rows = document.querySelectorAll(
-        "#caseTable tbody tr"
-    );
+    const statusFilter =
+        document
+            .getElementById("statusFilter")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#caseTable tbody tr"
+        );
 
 
     rows.forEach(row => {
@@ -745,22 +854,64 @@ function filterCases() {
            GET ROW DATA
         ========================= */
 
-        const rowText = row
-            .textContent
-            .trim()
-            .toLowerCase();
+        const customerNo =
+            row.cells[1]
+                .textContent
+                .trim()
+                .toLowerCase();
 
 
-        /*
-         * IMPORTANT
-         * อ่าน Status จาก data-status
-         * ไม่อ่านจาก Badge
-         */
+        const customerName =
+            row.cells[2]
+                .textContent
+                .trim()
+                .toLowerCase();
 
-        const status = row
-            .getAttribute("data-status")
-            ?.trim()
-            .toLowerCase() || "";
+
+        const status =
+            row
+                .getAttribute("data-status")
+                ?.trim()
+                .toLowerCase() || "";
+
+
+        const registerDate =
+            row.cells[0]
+                .textContent
+                .trim()
+                .toLowerCase();
+
+
+        /* =========================
+           SEARCH VALUE
+        ========================= */
+
+        let searchValue = "";
+
+
+        if (searchField === "customerNo") {
+
+            searchValue = customerNo;
+
+        }
+
+        else if (searchField === "customerName") {
+
+            searchValue = customerName;
+
+        }
+
+        else if (searchField === "status") {
+
+            searchValue = status;
+
+        }
+
+        else if (searchField === "registerDate") {
+
+            searchValue = registerDate;
+
+        }
 
 
         /* =========================
@@ -769,11 +920,11 @@ function filterCases() {
 
         const matchSearch =
             searchInput === "" ||
-            rowText.includes(searchInput);
+            searchValue.includes(searchInput);
 
 
         /* =========================
-           STATUS MATCH
+           STATUS FILTER MATCH
         ========================= */
 
         const matchStatus =
@@ -792,7 +943,9 @@ function filterCases() {
 
             row.style.display = "";
 
-        } else {
+        }
+
+        else {
 
             row.style.display = "none";
 
@@ -839,7 +992,9 @@ function sortByRegisterDate() {
 
         dateSortOrder = "asc";
 
-    } else {
+    }
+
+    else {
 
         dateSortOrder = "desc";
 
@@ -907,7 +1062,9 @@ function sortByRegisterDate() {
 
             return timeA - timeB;
 
-        } else {
+        }
+
+        else {
 
             return timeB - timeA;
 
@@ -943,7 +1100,9 @@ function sortByRegisterDate() {
 
         icon.textContent = "↑";
 
-    } else {
+    }
+
+    else {
 
         icon.textContent = "↓";
 
