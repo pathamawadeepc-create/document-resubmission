@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="th">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -126,6 +126,31 @@
             border-radius: 6px;
             background: #fff;
             font-size: 10px;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           Requested Documents
+           Read Only
+        ========================= */
+
+        .readonly {
+            background: #f3f4f6;
+        }
+
+        .readonly select {
+            background: #e5e7eb;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .readonly input[type="checkbox"] {
+            cursor: not-allowed;
+        }
+
+        .readonly label {
+            color: #555;
         }
 
 
@@ -140,6 +165,13 @@
             border-radius: 8px;
             padding: 10px;
             resize: none;
+        }
+
+        .note-box.readonly {
+            background: #f3f4f6;
+            color: #555;
+            cursor: not-allowed;
+            border-color: #d1d5db;
         }
 
 
@@ -176,6 +208,15 @@
 
         .btn-blue {
             background: #2563eb;
+        }
+
+        /* =========================
+           Disabled Button
+        ========================= */
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
 
@@ -589,9 +630,6 @@
                     </div>
 
 
-                   
-
-
                     <!-- Create Date -->
 
                     <div class="info-item">
@@ -652,9 +690,7 @@
                     </div>
 
 
-                    <!-- =========================
-                         Request Date
-                    ========================= -->
+                    <!-- Request Date -->
 
                     <div
                         class="info-item"
@@ -672,9 +708,7 @@
                     </div>
 
 
-                    <!-- =========================
-                         Request Aging
-                    ========================= -->
+                    <!-- Request Aging -->
 
                     <div
                         class="info-item"
@@ -690,9 +724,9 @@
                         </div>
 
                     </div>
-		 <!-- =========================
-                         Owner
-                    ========================= -->
+
+
+                    <!-- Owner -->
 
                     <div
                         class="info-item"
@@ -708,6 +742,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </div>
@@ -722,7 +757,10 @@
 
                 <!-- Requested Documents -->
 
-                <div class="section">
+                <div
+                    class="section"
+                    id="requestedDocumentsSection"
+                >
 
                     <h3>
                         Requested Documents
@@ -976,7 +1014,6 @@
 
                             </tr>
 
-
                         </tbody>
 
                     </table>
@@ -988,7 +1025,10 @@
                      Note
                 ========================= -->
 
-                <div class="section">
+                <div
+                    class="section"
+                    id="noteSection"
+                >
 
                     <h3>
                         Note
@@ -1004,7 +1044,6 @@
 
                 </div>
 
-
             </div>
 
 
@@ -1018,6 +1057,7 @@
             <div class="button-group">
 
                 <button
+                    id="cancelBtn"
                     class="btn btn-red"
                     onclick="resetForm()"
                 >
@@ -1026,6 +1066,7 @@
 
 
                 <button
+                    id="requestBtn"
                     class="btn btn-green"
                     onclick="confirmRequest()"
                 >
@@ -1215,7 +1256,6 @@
             const steps =
                 document.querySelectorAll('.status-step');
 
-
             const lines =
                 document.querySelectorAll('.status-line');
 
@@ -1339,6 +1379,101 @@
             if (status === 4) {
 
                 loadDoneData();
+
+            }
+
+
+            /* =========================
+               Read Only Control
+            ========================= */
+
+            setReadOnly(status === 4);
+
+        }
+
+
+
+        /* =========================
+           Read Only Function
+        ========================= */
+
+        function setReadOnly(isReadOnly) {
+
+            const documentSection =
+                document.getElementById(
+                    "requestedDocumentsSection"
+                );
+
+            const noteBox =
+                document.getElementById("caseNote");
+
+            const cancelBtn =
+                document.getElementById("cancelBtn");
+
+            const requestBtn =
+                document.getElementById("requestBtn");
+
+
+            /* =========================
+               Requested Documents
+            ========================= */
+
+            const checkboxes =
+                documentSection.querySelectorAll(
+                    'input[type="checkbox"]'
+                );
+
+            const selects =
+                documentSection.querySelectorAll(
+                    'select'
+                );
+
+
+            checkboxes.forEach(item => {
+
+                item.disabled = isReadOnly;
+
+            });
+
+
+            selects.forEach(item => {
+
+                item.disabled = isReadOnly;
+
+            });
+
+
+            /* =========================
+               Note
+            ========================= */
+
+            noteBox.readOnly = isReadOnly;
+
+
+            /* =========================
+               Buttons
+            ========================= */
+
+            cancelBtn.disabled = isReadOnly;
+
+            requestBtn.disabled = isReadOnly;
+
+
+            /* =========================
+               Visual Read Only
+            ========================= */
+
+            if (isReadOnly) {
+
+                documentSection.classList.add("readonly");
+
+                noteBox.classList.add("readonly");
+
+            } else {
+
+                documentSection.classList.remove("readonly");
+
+                noteBox.classList.remove("readonly");
 
             }
 
@@ -1527,8 +1662,7 @@
 
 
             /* =========================
-               ยังคงใช้ Request Date /
-               Request Aging
+               Request Date / Request Aging
             ========================= */
 
             setStatusInfo(
@@ -1604,8 +1738,7 @@
 
 
             /* =========================
-               ยังคงใช้ Request Date /
-               Request Aging
+               Request Date / Request Aging
             ========================= */
 
             setStatusInfo(
@@ -1699,7 +1832,9 @@
         function clearDocuments() {
 
             document
-                .querySelectorAll('input[type="checkbox"]')
+                .querySelectorAll(
+                    '#requestedDocumentsSection input[type="checkbox"]'
+                )
                 .forEach(item => {
 
                     item.checked = false;
@@ -1708,7 +1843,9 @@
 
 
             document
-                .querySelectorAll('select')
+                .querySelectorAll(
+                    '#requestedDocumentsSection select'
+                )
                 .forEach(item => {
 
                     item.selectedIndex = 0;
@@ -1748,7 +1885,9 @@
         function resetForm() {
 
             document
-                .querySelectorAll('input[type="checkbox"]')
+                .querySelectorAll(
+                    '#requestedDocumentsSection input[type="checkbox"]'
+                )
                 .forEach(item => {
 
                     item.checked = false;
@@ -1757,7 +1896,9 @@
 
 
             document
-                .querySelectorAll('select')
+                .querySelectorAll(
+                    '#requestedDocumentsSection select'
+                )
                 .forEach(item => {
 
                     item.selectedIndex = 0;
@@ -1789,4 +1930,3 @@
 </body>
 
 </html>
-```
