@@ -1,35 +1,123 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Document Submission</title>
+
 <style>
-body{font-family:Segoe UI,sans-serif;margin:0;background:#f5f6fa}
-.sidebar{width:240px;height:100vh;background:#0f172a;color:#fff;position:fixed}
-.logo{padding:20px;font-size:24px;font-weight:bold}
-.menu a{display:block;color:#fff;text-decoration:none;padding:15px 20px}
-.menu a:hover,.active{background:#dc2626}
-.main{margin-left:240px;padding:30px}
-.cards{display:flex;gap:20px;margin-bottom:20px}
-.card{background:#fff;padding:20px;border-radius:10px;flex:1;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.card h3{margin:0;color:#666}
-.card .num{font-size:36px;font-weight:bold}
-.table-wrap{background:#fff;padding:20px;border-radius:10px}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px;border-bottom:1px solid #eee;text-align:left}
-.badge{padding:5px 10px;border-radius:20px;font-size:12px}
-.new{background:#dbeafe;color:#1d4ed8}
-.req{background:#fef3c7;color:#92400e}
-.sub{background:#dcfce7;color:#166534}
-.done{background:#e5e7eb}
-.btn{background:#dc2626;color:#fff;padding:8px 16px;border-radius:5px;text-decoration:none}
-.search-input {
-    width: 250px;
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: Segoe UI, sans-serif;
+    margin: 0;
+    background: #f5f6fa;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #0f172a;
+    color: #fff;
+    position: fixed;
+}
+
+.logo {
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 20px;
+}
+
+.menu a:hover,
+.active {
+    background: #dc2626;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+.table-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+
+/* =========================
+   SEARCH FIELD
+========================= */
+
+.search-field {
     padding: 9px 12px;
+
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 14px;
+
+    background: #fff;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+.search-field:focus {
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   SEARCH INPUT
+========================= */
+
+.search-input {
+    width: 250px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    font-size: 10px;
+
     outline: none;
 }
 
@@ -37,127 +125,1059 @@ th,td{padding:12px;border-bottom:1px solid #eee;text-align:left}
     border-color: #2563eb;
 }
 
-.status-filter {
-    padding: 9px 12px;
-    border: 1px solid #ddd;
+
+/* =========================
+   CLEAR FILTER BUTTON
+========================= */
+
+.clear-btn {
+    padding: 9px 14px;
+
+    border: 1px solid #dc2626;
+
     border-radius: 6px;
+
     background: #fff;
-    font-size: 14px;
+
+    color: #dc2626;
+
+    font-size: 10px;
+
     cursor: pointer;
+
+    transition: 0.2s;
 }
+
+.clear-btn:hover {
+    background: #dc2626;
+    color: #fff;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+
+/* =========================
+   SORTABLE HEADER
+========================= */
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sortable:hover {
+    background: #f1f5f9;
+}
+
+.sort-icon {
+    font-size: 11px;
+    margin-left: 5px;
+    color: #666;
+}
+
+
+/* =========================
+   STATUS BADGE
+========================= */
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.new {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.req {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.sub {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.done {
+    background: #e5e7eb;
+}
+
+
+/* =========================
+   LINK
+========================= */
+
+td a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   EMPTY RESULT
+========================= */
+
+.no-result {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+    display: none;
+}
+
 </style>
+
 </head>
+
+
 <body>
 
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
 <div class="sidebar">
-<div class="logo">AIRA & AIFUL</div>
-<div class="menu">
-<a href="dashboard.html">Dashboard</a>
-<a href="new.html">New</a>
-<a href="requested.html">Requested</a>
-<a class="active">Submitted</a>
-<a href="done.html">Done</a>
+
+    <div class="logo">
+        AIRA & AIFUL
+    </div>
+
+    <div class="menu">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="new.html">
+            New
+        </a>
+
+        <a href="requested.html">
+            Requested
+        </a>
+
+        <a class="active">
+            Submitted
+        </a>
+
+        <a href="done.html">
+            Done
+        </a>
+
+    </div>
+
 </div>
-</div>
 
 
 
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="main">
- <h2>Submitted Cases</h2>
 
-<table>
+    <h2>
+        Submitted Cases
+    </h2>
+
+
+    <!-- =========================
+         FILTER
+    ========================= -->
 
     <div class="table-header">
+
         <div class="filter-group">
+
+
+            <!-- FIELD DROPDOWN -->
+
+            <select
+                id="searchField"
+                class="search-field"
+                onchange="updateSearchPlaceholder()"
+            >
+
+                <option value="">
+                    Select Field
+                </option>
+
+                <option value="customerNo">
+                    Customer No
+                </option>
+
+                <option value="customerName">
+                    Customer Name
+                </option>
+
+                <option value="status">
+                    Status
+                </option>
+
+                <option value="registerDate">
+                    Register Date
+                </option>
+
+            </select>
+
+
+            <!-- SEARCH -->
 
             <input
                 type="text"
                 id="caseSearch"
                 class="search-input"
-                placeholder="Search Customer / Customer No..."
+                placeholder="Select field first..."
                 onkeyup="filterCases()"
+                disabled
             >
-	</div>
+
+
+            <!-- CLEAR -->
+
+            <button
+                type="button"
+                class="clear-btn"
+                onclick="clearFilters()"
+            >
+                Clear Filter
+            </button>
+
         </div>
-<thead>
-<tr>
-<th>Register Date</th>
-<th>Customer No</th>
-<th>Customer Name</th>
-<th>Status</th>
-<th>Request Count</th>
-<th>Submission Count</th>
-<th>Aging</th>
-<th>Submit Date</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>10/08/2569</td>
-<td> <a href="case-submitted.html">30000000001</a></td>
-<td>น.ส.ปริณ แสงทอง</td>
-<td><span class="badge sub">Submitted</span></td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>15/08/2566 11:20</td>
-</tr>
 
-<tr>
-<td>11/08/2569</td>
-<td> <a href="case-submitted.html">30000000002</a></td>
-<td>น.ส.วราพร รุ่งเรือง</td>
-<td><span class="badge sub">Submitted</span></td>
-<td>2</td>
-<td>2</td>
-<td>3</td>
-<td>15/08/2566 10:15</td>
-</tbody>
-</table>
+    </div>
+
+
+
+    <!-- =========================
+         TABLE
+    ========================= -->
+
+    <table id="caseTable">
+
+        <thead>
+
+            <tr>
+
+
+                <!-- Register Date -->
+
+                <th
+                    class="sortable"
+                    onclick="sortTable(0, 'date')"
+                >
+
+                    Register Date
+
+                    <span
+                        id="sortIcon0"
+                        class="sort-icon"
+                    >
+                        ↕
+                    </span>
+
+                </th>
+
+
+                <!-- Customer No -->
+
+                <th>
+                    Customer No
+                </th>
+
+
+                <!-- Customer Name -->
+
+                <th>
+                    Customer Name
+                </th>
+
+
+                <!-- Status -->
+
+                <th>
+                    Status
+                </th>
+
+
+                <!-- Request Count -->
+
+                <th
+                    class="sortable"
+                    onclick="sortTable(4, 'number')"
+                >
+
+                    Request Count
+
+                    <span
+                        id="sortIcon4"
+                        class="sort-icon"
+                    >
+                        ↕
+                    </span>
+
+                </th>
+
+
+                <!-- Submission Count -->
+
+                <th>
+                    Submission Count
+                </th>
+
+
+                <!-- Case Aging -->
+
+                <th
+                    class="sortable"
+                    onclick="sortTable(6, 'number')"
+                >
+
+                    Aging
+
+                    <span
+                        id="sortIcon6"
+                        class="sort-icon"
+                    >
+                        ↕
+                    </span>
+
+                </th>
+
+
+                <!-- Submit Date -->
+
+                <th
+                    class="sortable"
+                    onclick="sortTable(7, 'datetime')"
+                >
+
+                    Submit Date
+
+                    <span
+                        id="sortIcon7"
+                        class="sort-icon"
+                    >
+                        ↕
+                    </span>
+
+                </th>
+
+
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            <!-- =========================
+                 CASE 1
+            ========================= -->
+
+            <tr>
+
+                <td data-value="10/08/2569">
+                    10/08/2569
+                </td>
+
+                <td>
+                    <a href="case-submitted.html">
+                        30000000001
+                    </a>
+                </td>
+
+                <td>
+                    น.ส.ปริณ แสงทอง
+                </td>
+
+                <td>
+
+                    <span class="badge sub">
+                        Submitted
+                    </span>
+
+                </td>
+
+                <td>
+                    1
+                </td>
+
+                <td>
+                    1
+                </td>
+
+                <td>
+                    1
+                </td>
+
+                <td data-value="15/08/2569 11:20">
+                    15/08/2569 11:20
+                </td>
+
+                <td></td>
+
+            </tr>
+
+
+
+            <!-- =========================
+                 CASE 2
+            ========================= -->
+
+            <tr>
+
+                <td data-value="11/08/2569">
+                    11/08/2569
+                </td>
+
+                <td>
+                    <a href="case-submitted.html">
+                        30000000002
+                    </a>
+                </td>
+
+                <td>
+                    น.ส.วราพร รุ่งเรือง
+                </td>
+
+                <td>
+
+                    <span class="badge sub">
+                        Submitted
+                    </span>
+
+                </td>
+
+                <td>
+                    2
+                </td>
+
+                <td>
+                    2
+                </td>
+
+                <td>
+                    3
+                </td>
+
+                <td data-value="15/08/2569 10:15">
+                    15/08/2569 10:15
+                </td>
+
+                <td></td>
+
+            </tr>
+
+
+        </tbody>
+
+    </table>
+
+
+    <!-- =========================
+         NO RESULT
+    ========================= -->
+
+    <div
+        id="noResult"
+        class="no-result"
+    >
+        No cases found
+    </div>
+
+
 </div>
 
-</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script>
+
+
+/* =========================
+   SEARCH PLACEHOLDER
+========================= */
+
+function updateSearchPlaceholder() {
+
+    const field =
+        document.getElementById("searchField").value;
+
+    const searchInput =
+        document.getElementById("caseSearch");
+
+
+    if (field === "") {
+
+        searchInput.value = "";
+
+        searchInput.disabled = true;
+
+        searchInput.placeholder =
+            "Select field first...";
+
+        filterCases();
+
+        return;
+    }
+
+
+    searchInput.disabled = false;
+
+
+    if (field === "customerNo") {
+
+        searchInput.placeholder =
+            "Search Customer No...";
+
+    }
+
+    else if (field === "customerName") {
+
+        searchInput.placeholder =
+            "Search Customer Name...";
+
+    }
+
+    else if (field === "status") {
+
+        searchInput.placeholder =
+            "Search Status...";
+
+    }
+
+    else if (field === "registerDate") {
+
+        searchInput.placeholder =
+            "Search Register Date...";
+
+    }
+
+
+    searchInput.focus();
+
+    filterCases();
+
+}
+
+
+
+/* =========================
+   FILTER CASES
+========================= */
+
 function filterCases() {
 
-    const searchInput = document
-        .getElementById("caseSearch")
-        .value
-        .toLowerCase();
+    const field =
+        document.getElementById("searchField").value;
 
-    const statusFilter = document
-        .getElementById("statusFilter")
-        .value
-        .toLowerCase();
 
-    const rows = document.querySelectorAll("#caseTable tbody tr");
+    const keyword =
+        document
+            .getElementById("caseSearch")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#caseTable tbody tr"
+        );
+
+
+    let visibleCount = 0;
+
 
     rows.forEach(row => {
 
-        const rowText = row.textContent.toLowerCase();
 
-        const status = row
-            .querySelector(".badge")
-            ?.textContent
-            .toLowerCase() || "";
+        /* =========================
+           DEFAULT
+        ========================= */
 
-        const matchSearch = rowText.includes(searchInput);
+        if (field === "" || keyword === "") {
 
-        const matchStatus =
-            statusFilter === "" ||
-            status === statusFilter;
-
-        if (matchSearch && matchStatus) {
             row.style.display = "";
-        } else {
+
+            visibleCount++;
+
+            return;
+
+        }
+
+
+        let value = "";
+
+
+        /* =========================
+           CUSTOMER NO
+        ========================= */
+
+        if (field === "customerNo") {
+
+            value =
+                row.cells[1]
+                    .textContent
+                    .trim()
+                    .toLowerCase();
+
+        }
+
+
+        /* =========================
+           CUSTOMER NAME
+        ========================= */
+
+        else if (field === "customerName") {
+
+            value =
+                row.cells[2]
+                    .textContent
+                    .trim()
+                    .toLowerCase();
+
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        else if (field === "status") {
+
+            value =
+                row.cells[3]
+                    .textContent
+                    .trim()
+                    .toLowerCase();
+
+        }
+
+
+        /* =========================
+           REGISTER DATE
+        ========================= */
+
+        else if (field === "registerDate") {
+
+            value =
+                row.cells[0]
+                    .textContent
+                    .trim()
+                    .toLowerCase();
+
+        }
+
+
+        /* =========================
+           MATCH
+        ========================= */
+
+        if (
+            value.includes(keyword)
+        ) {
+
+            row.style.display = "";
+
+            visibleCount++;
+
+        }
+
+        else {
+
             row.style.display = "none";
+
         }
 
     });
+
+
+    /* =========================
+       NO RESULT
+    ========================= */
+
+    const noResult =
+        document.getElementById("noResult");
+
+
+    if (visibleCount === 0) {
+
+        noResult.style.display = "block";
+
+    }
+
+    else {
+
+        noResult.style.display = "none";
+
+    }
+
+}
+
+
+
+/* =========================
+   CLEAR FILTER
+========================= */
+
+function clearFilters() {
+
+    /* =========================
+       CLEAR DROPDOWN
+    ========================= */
+
+    document.getElementById(
+        "searchField"
+    ).value = "";
+
+
+    /* =========================
+       CLEAR SEARCH
+    ========================= */
+
+    const searchInput =
+        document.getElementById("caseSearch");
+
+
+    searchInput.value = "";
+
+    searchInput.disabled = true;
+
+    searchInput.placeholder =
+        "Select field first...";
+
+
+    /* =========================
+       SHOW ALL ROWS
+    ========================= */
+
+    document
+        .querySelectorAll(
+            "#caseTable tbody tr"
+        )
+        .forEach(row => {
+
+            row.style.display = "";
+
+        });
+
+
+    document.getElementById(
+        "noResult"
+    ).style.display = "none";
+
+}
+
+
+
+/* =========================
+   SORT STATE
+========================= */
+
+const sortDirections = {};
+
+
+/* =========================
+   SORT TABLE
+========================= */
+
+function sortTable(columnIndex, type) {
+
+    const table =
+        document.getElementById("caseTable");
+
+    const tbody =
+        table.querySelector("tbody");
+
+
+    const rows =
+        Array.from(
+            tbody.querySelectorAll("tr")
+        );
+
+
+    /* =========================
+       CHANGE DIRECTION
+    ========================= */
+
+    if (
+        !sortDirections[columnIndex] ||
+        sortDirections[columnIndex] === "desc"
+    ) {
+
+        sortDirections[columnIndex] = "asc";
+
+    }
+
+    else {
+
+        sortDirections[columnIndex] = "desc";
+
+    }
+
+
+    const direction =
+        sortDirections[columnIndex] === "asc"
+            ? 1
+            : -1;
+
+
+    /* =========================
+       SORT
+    ========================= */
+
+    rows.sort((a, b) => {
+
+        let valueA;
+        let valueB;
+
+
+        /* =========================
+           DATE
+        ========================= */
+
+        if (type === "date") {
+
+            valueA =
+                parseThaiDate(
+                    a.cells[columnIndex]
+                        .textContent
+                        .trim()
+                );
+
+            valueB =
+                parseThaiDate(
+                    b.cells[columnIndex]
+                        .textContent
+                        .trim()
+                );
+
+        }
+
+
+        /* =========================
+           DATETIME
+        ========================= */
+
+        else if (type === "datetime") {
+
+            valueA =
+                parseThaiDateTime(
+                    a.cells[columnIndex]
+                        .textContent
+                        .trim()
+                );
+
+            valueB =
+                parseThaiDateTime(
+                    b.cells[columnIndex]
+                        .textContent
+                        .trim()
+                );
+
+        }
+
+
+        /* =========================
+           NUMBER
+        ========================= */
+
+        else if (type === "number") {
+
+            valueA =
+                parseFloat(
+                    a.cells[columnIndex]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+            valueB =
+                parseFloat(
+                    b.cells[columnIndex]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+        }
+
+
+        return (
+            valueA - valueB
+        ) * direction;
+
+    });
+
+
+    /* =========================
+       APPEND SORTED ROWS
+    ========================= */
+
+    rows.forEach(row => {
+
+        tbody.appendChild(row);
+
+    });
+
+
+    /* =========================
+       RESET ALL ICONS
+    ========================= */
+
+    document
+        .querySelectorAll(".sort-icon")
+        .forEach(icon => {
+
+            icon.textContent = "↕";
+
+        });
+
+
+    /* =========================
+       UPDATE CURRENT ICON
+    ========================= */
+
+    const currentIcon =
+        document.getElementById(
+            "sortIcon" + columnIndex
+        );
+
+
+    if (currentIcon) {
+
+        currentIcon.textContent =
+            sortDirections[columnIndex] === "asc"
+                ? "↑"
+                : "↓";
+
+    }
+
+
+    /* =========================
+       RE-APPLY FILTER
+    ========================= */
+
+    filterCases();
+
+}
+
+
+
+/* =========================
+   PARSE THAI DATE
+========================= */
+
+function parseThaiDate(dateString) {
+
+    const parts =
+        dateString.split("/");
+
+
+    if (parts.length !== 3) {
+
+        return 0;
+
+    }
+
+
+    const day =
+        parseInt(parts[0], 10);
+
+    const month =
+        parseInt(parts[1], 10) - 1;
+
+    const year =
+        parseInt(parts[2], 10) - 543;
+
+
+    return new Date(
+        year,
+        month,
+        day
+    ).getTime();
+
+}
+
+
+
+/* =========================
+   PARSE THAI DATETIME
+========================= */
+
+function parseThaiDateTime(dateString) {
+
+    const parts =
+        dateString.split(" ");
+
+
+    const datePart =
+        parts[0];
+
+
+    const timePart =
+        parts[1] || "00:00";
+
+
+    const dateValue =
+        parseThaiDate(datePart);
+
+
+    const timeParts =
+        timePart.split(":");
+
+
+    const hour =
+        parseInt(timeParts[0], 10) || 0;
+
+    const minute =
+        parseInt(timeParts[1], 10) || 0;
+
+
+    return (
+        dateValue +
+        (
+            hour * 60 * 60 * 1000
+        ) +
+        (
+            minute * 60 * 1000
+        )
+    );
+
 }
 
 </script>
+
+
 </body>
+
 </html>
