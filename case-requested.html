@@ -635,13 +635,12 @@
 
                     <div class="info-item">
 
-                        <label>
-                            Request Date 
+                        <label id="statusDateLabel">
+                            Request Date
                         </label>
 
-                        <div id="holdDate">
+                        <div id="statusDate">
                             15/08/2569 11:23
-
                         </div>
 
                     </div>
@@ -649,12 +648,12 @@
 
                     <div class="info-item">
 
-                        <label>
-                            Request Aging 
+                        <label id="statusAgingLabel">
+                            Request Aging
                         </label>
 
-                        <div id="aging">
-                            1 Days
+                        <div id="statusAging">
+                            1 Day
                         </div>
 
                     </div>
@@ -1331,6 +1330,13 @@
             document.getElementById("submissionCount").textContent =
                 "00";
 
+            setStatusInfo(
+                "New Date",
+                "New Aging",
+                "14/08/2569 12:04",
+                "1 Day"
+            );
+
             clearDocuments();
 
             document.getElementById("caseNote").value =
@@ -1369,6 +1375,13 @@
 
             document.getElementById("submissionCount").textContent =
                 "00";
+
+            setStatusInfo(
+                "Request Date",
+                "Request Aging",
+                "15/08/2569 09:35",
+                "1 Day"
+            );
 
             clearDocuments();
 
@@ -1421,6 +1434,13 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+            setStatusInfo(
+                "Submission Date",
+                "Submission Aging",
+                "16/08/2569 18:08",
+                "0 Day"
+            );
+
             clearDocuments();
 
             document.getElementById("doc_statement").checked =
@@ -1472,6 +1492,13 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+            setStatusInfo(
+                "Completion Date",
+                "Completion Aging",
+                "16/08/2569 18:08",
+                "0 Day"
+            );
+
             clearDocuments();
 
             document.getElementById("doc_statement").checked =
@@ -1491,6 +1518,26 @@
 
         }
 
+
+
+        /* =========================
+           Dynamic Status Date / Aging
+        ========================= */
+
+        function setStatusInfo(dateLabel, agingLabel, dateValue, agingValue) {
+
+            document.getElementById("statusDateLabel").textContent =
+                dateLabel;
+
+            document.getElementById("statusAgingLabel").textContent =
+                agingLabel;
+
+            document.getElementById("statusDate").textContent =
+                dateValue;
+
+            document.getElementById("statusAging").textContent =
+                agingValue;
+        }
 
 
         /* =========================
