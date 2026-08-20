@@ -16,6 +16,7 @@ body {
     background: #f5f6fa;
 }
 
+
 /* =========================
    SIDEBAR
 ========================= */
@@ -146,6 +147,10 @@ td {
     text-align: left;
 }
 
+th {
+    white-space: nowrap;
+}
+
 
 /* =========================
    STATUS BADGE
@@ -174,19 +179,7 @@ td {
 
 .done {
     background: #e5e7eb;
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-.btn {
-    background: #dc2626;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-decoration: none;
+    color: #374151;
 }
 
 
@@ -207,7 +200,7 @@ td {
 
 
 /* =========================
-   FILTER
+   FILTER GROUP
 ========================= */
 
 .filter-group {
@@ -218,7 +211,7 @@ td {
 
 
 /* =========================
-   SEARCH FIELD SELECTOR
+   SEARCH FIELD DROPDOWN
 ========================= */
 
 .search-field {
@@ -229,10 +222,9 @@ td {
 
     background: #fff;
 
-    font-size: 10px;
+    font-size: 12px;
 
     cursor: pointer;
-
     outline: none;
 }
 
@@ -253,7 +245,7 @@ td {
     border: 1px solid #ddd;
     border-radius: 6px;
 
-    font-size: 10px;
+    font-size: 12px;
 
     outline: none;
 }
@@ -264,25 +256,35 @@ td {
 
 
 /* =========================
-   STATUS FILTER
+   CLEAR FILTER BUTTON
 ========================= */
 
-.status-filter {
-    padding: 9px 12px;
+.clear-btn {
+    padding: 9px 16px;
 
-    border: 1px solid #ddd;
+    border: 1px solid #dc2626;
     border-radius: 6px;
 
-    background: #fff;
+    background: #ffffff;
 
-    font-size: 10px;
+    color: #dc2626;
+
+    font-size: 12px;
+    font-weight: 600;
 
     cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
 }
 
 
 /* =========================
-   SORT
+   SORTABLE HEADER
 ========================= */
 
 .sortable {
@@ -291,13 +293,40 @@ td {
 }
 
 .sortable:hover {
-    background: #e5e7eb;
+    background: #f3f4f6;
 }
 
-#dateSortIcon {
+
+/* =========================
+   SORT ICON
+========================= */
+
+.sort-icon {
     font-size: 12px;
     margin-left: 5px;
-    color: #666;
+    color: #9ca3af;
+}
+
+
+/* Active sort */
+
+.sort-active {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+
+/* =========================
+   CUSTOMER LINK
+========================= */
+
+td a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;
 }
 
 </style>
@@ -345,6 +374,7 @@ td {
 </div>
 
 
+
 <!-- =========================
      MAIN
 ========================= -->
@@ -373,11 +403,13 @@ td {
     </div>
 
 
+
     <!-- =========================
          SUMMARY CARDS
     ========================= -->
 
     <div class="cards">
+
 
         <div class="card">
 
@@ -430,7 +462,9 @@ td {
 
         </div>
 
+
     </div>
+
 
 
     <!-- =========================
@@ -442,17 +476,20 @@ td {
 
         <div class="table-header">
 
+
             <h2>
                 All Cases
             </h2>
 
 
+            <!-- =========================
+                 FILTER
+            ========================= -->
+
             <div class="filter-group">
 
 
-                <!-- =========================
-                     SEARCH FIELD
-                ========================= -->
+                <!-- SEARCH FIELD -->
 
                 <select
                     id="searchField"
@@ -479,9 +516,7 @@ td {
                 </select>
 
 
-                <!-- =========================
-                     SEARCH INPUT
-                ========================= -->
+                <!-- SEARCH INPUT -->
 
                 <input
                     type="text"
@@ -492,10 +527,23 @@ td {
                 >
 
 
+                <!-- CLEAR -->
+
+                <button
+                    type="button"
+                    class="clear-btn"
+                    onclick="clearFilters()"
+                >
+
+                    Clear Filters
+
+                </button>
+
 
             </div>
 
         </div>
+
 
 
         <!-- =========================
@@ -509,77 +557,98 @@ td {
 
                 <tr>
 
+
+                    <!-- REGISTER DATE -->
+
                     <th
                         class="sortable"
-                        onclick="sortByRegisterDate()">
+                        onclick="sortTable('registerDate')"
+                    >
 
                         Register Date
 
-                        <span id="dateSortIcon">
+                        <span
+                            id="sort-registerDate"
+                            class="sort-icon"
+                        >
                             ↕
                         </span>
 
                     </th>
 
 
-			<th
-                        class="sortable"
-                        onclick="sortByRegisterDate()">
+                    <!-- CUSTOMER NO -->
 
+                    <th>
                         Customer No
-
-                        <span id="dateSortIcon">
-                            ↕
-                        </span>
-
                     </th>
 
 
+                    <!-- CUSTOMER NAME -->
 
                     <th>
                         Customer Name
                     </th>
 
 
+                    <!-- STATUS -->
+
                     <th>
                         Status
                     </th>
 
 
-			<th
+                    <!-- REQUEST COUNT -->
+
+                    <th
                         class="sortable"
-                        onclick="sortByRegisterDate()">
+                        onclick="sortTable('requestCount')"
+                    >
 
                         Request Count
 
-                        <span id="dateSortIcon">
+                        <span
+                            id="sort-requestCount"
+                            class="sort-icon"
+                        >
                             ↕
                         </span>
 
                     </th>
 
 
+                    <!-- CASE AGING -->
 
-			<th
+                    <th
                         class="sortable"
-                        onclick="sortByRegisterDate()">
+                        onclick="sortTable('caseAging')"
+                    >
 
                         Case Aging
 
-                        <span id="dateSortIcon">
+                        <span
+                            id="sort-caseAging"
+                            class="sort-icon"
+                        >
                             ↕
                         </span>
 
                     </th>
 
 
-			<th
+                    <!-- LAST UPDATE -->
+
+                    <th
                         class="sortable"
-                        onclick="sortByRegisterDate()">
+                        onclick="sortTable('lastUpdate')"
+                    >
 
                         Last Update
 
-                        <span id="dateSortIcon">
+                        <span
+                            id="sort-lastUpdate"
+                            class="sort-icon"
+                        >
                             ↕
                         </span>
 
@@ -591,11 +660,12 @@ td {
             </thead>
 
 
+
             <tbody>
 
 
                 <!-- =========================
-                     CASE 1 - SUBMITTED
+                     CASE 1
                 ========================= -->
 
                 <tr data-status="Submitted">
@@ -605,9 +675,13 @@ td {
                     </td>
 
                     <td>
+
                         <a href="case-submitted.html">
+
                             30000000001
+
                         </a>
+
                     </td>
 
                     <td>
@@ -637,8 +711,9 @@ td {
                 </tr>
 
 
+
                 <!-- =========================
-                     CASE 2 - REQUESTED
+                     CASE 2
                 ========================= -->
 
                 <tr data-status="Requested">
@@ -648,9 +723,13 @@ td {
                     </td>
 
                     <td>
+
                         <a href="case-requested.html">
+
                             30000000002
+
                         </a>
+
                     </td>
 
                     <td>
@@ -680,8 +759,9 @@ td {
                 </tr>
 
 
+
                 <!-- =========================
-                     CASE 3 - NEW
+                     CASE 3
                 ========================= -->
 
                 <tr data-status="New">
@@ -691,9 +771,13 @@ td {
                     </td>
 
                     <td>
+
                         <a href="case-detail.html">
+
                             30000000003
+
                         </a>
+
                     </td>
 
                     <td>
@@ -723,8 +807,9 @@ td {
                 </tr>
 
 
+
                 <!-- =========================
-                     CASE 4 - DONE
+                     CASE 4
                 ========================= -->
 
                 <tr data-status="Done">
@@ -734,9 +819,13 @@ td {
                     </td>
 
                     <td>
+
                         <a href="case-done.html">
+
                             20000000000
+
                         </a>
+
                     </td>
 
                     <td>
@@ -785,62 +874,72 @@ td {
 <script>
 
 
-/* =========================
-   CHANGE SEARCH FIELD
-========================= */
+/* =====================================================
+   SEARCH FIELD
+===================================================== */
 
 function changeSearchField() {
 
+
     const field =
-        document.getElementById("searchField").value;
+        document.getElementById(
+            "searchField"
+        ).value;
 
-    const searchInput =
-        document.getElementById("caseSearch");
 
-
-    /* =========================
-       CHANGE PLACEHOLDER
-    ========================= */
-
-    if (field === "customerNo") {
-
-        searchInput.placeholder =
-            "Search Customer No...";
-
-    }
-
-    else if (field === "customerName") {
-
-        searchInput.placeholder =
-            "Search Customer Name...";
-
-    }
-
-    else if (field === "status") {
-
-        searchInput.placeholder =
-            "Search Status...";
-
-    }
-
-    else if (field === "registerDate") {
-
-        searchInput.placeholder =
-            "Search Register Date...";
-
-    }
+    const input =
+        document.getElementById(
+            "caseSearch"
+        );
 
 
     /* =========================
        CLEAR OLD SEARCH
     ========================= */
 
-    searchInput.value = "";
+    input.value = "";
 
 
     /* =========================
-       FILTER AGAIN
+       CHANGE PLACEHOLDER
     ========================= */
+
+    switch (field) {
+
+
+        case "customerNo":
+
+            input.placeholder =
+                "Search Customer No...";
+
+            break;
+
+
+        case "customerName":
+
+            input.placeholder =
+                "Search Customer Name...";
+
+            break;
+
+
+        case "status":
+
+            input.placeholder =
+                "Search Status...";
+
+            break;
+
+
+        case "registerDate":
+
+            input.placeholder =
+                "Search Register Date...";
+
+            break;
+
+    }
+
 
     filterCases();
 
@@ -848,32 +947,25 @@ function changeSearchField() {
 
 
 
-/* =========================
+/* =====================================================
    FILTER CASES
-========================= */
+===================================================== */
 
 function filterCases() {
 
-    const searchInput =
-        document
-            .getElementById("caseSearch")
-            .value
-            .trim()
-            .toLowerCase();
+
+    const field =
+        document.getElementById(
+            "searchField"
+        ).value;
 
 
-    const searchField =
-        document
-            .getElementById("searchField")
-            .value;
-
-
-    const statusFilter =
-        document
-            .getElementById("statusFilter")
-            .value
-            .trim()
-            .toLowerCase();
+    const searchText =
+        document.getElementById(
+            "caseSearch"
+        ).value
+        .trim()
+        .toLowerCase();
 
 
     const rows =
@@ -886,7 +978,7 @@ function filterCases() {
 
 
         /* =========================
-           GET ROW DATA
+           GET DATA
         ========================= */
 
         const customerNo =
@@ -905,7 +997,9 @@ function filterCases() {
 
         const status =
             row
-                .getAttribute("data-status")
+                .getAttribute(
+                    "data-status"
+                )
                 ?.trim()
                 .toLowerCase() || "";
 
@@ -918,73 +1012,65 @@ function filterCases() {
 
 
         /* =========================
-           SEARCH VALUE
+           SELECT FIELD
         ========================= */
 
-        let searchValue = "";
+        let value = "";
 
-
-        if (searchField === "customerNo") {
-
-            searchValue = customerNo;
-
-        }
-
-        else if (searchField === "customerName") {
-
-            searchValue = customerName;
-
-        }
-
-        else if (searchField === "status") {
-
-            searchValue = status;
-
-        }
-
-        else if (searchField === "registerDate") {
-
-            searchValue = registerDate;
-
-        }
-
-
-        /* =========================
-           SEARCH MATCH
-        ========================= */
-
-        const matchSearch =
-            searchInput === "" ||
-            searchValue.includes(searchInput);
-
-
-        /* =========================
-           STATUS FILTER MATCH
-        ========================= */
-
-        const matchStatus =
-            statusFilter === "" ||
-            status === statusFilter;
-
-
-        /* =========================
-           SHOW / HIDE
-        ========================= */
 
         if (
-            matchSearch &&
-            matchStatus
+            field === "customerNo"
         ) {
 
-            row.style.display = "";
+            value = customerNo;
 
         }
 
-        else {
 
-            row.style.display = "none";
+        else if (
+            field === "customerName"
+        ) {
+
+            value = customerName;
 
         }
+
+
+        else if (
+            field === "status"
+        ) {
+
+            value = status;
+
+        }
+
+
+        else if (
+            field === "registerDate"
+        ) {
+
+            value = registerDate;
+
+        }
+
+
+        /* =========================
+           MATCH
+        ========================= */
+
+        const match =
+            searchText === "" ||
+            value.includes(searchText);
+
+
+        /* =========================
+           DISPLAY
+        ========================= */
+
+        row.style.display =
+            match
+                ? ""
+                : "none";
 
     });
 
@@ -992,48 +1078,170 @@ function filterCases() {
 
 
 
-/* =========================
-   SORT
-========================= */
+/* =====================================================
+   CLEAR FILTERS
+===================================================== */
 
-let dateSortOrder = "none";
+function clearFilters() {
 
 
-function sortByRegisterDate() {
+    /* =========================
+       RESET SEARCH FIELD
+    ========================= */
+
+    document.getElementById(
+        "searchField"
+    ).value = "customerNo";
+
+
+    /* =========================
+       CLEAR SEARCH
+    ========================= */
+
+    const input =
+        document.getElementById(
+            "caseSearch"
+        );
+
+
+    input.value = "";
+
+
+    input.placeholder =
+        "Search Customer No...";
+
+
+    /* =========================
+       SHOW ALL ROWS
+    ========================= */
+
+    const rows =
+        document.querySelectorAll(
+            "#caseTable tbody tr"
+        );
+
+
+    rows.forEach(row => {
+
+        row.style.display = "";
+
+    });
+
+}
+
+
+
+/* =====================================================
+   SORT STATE
+===================================================== */
+
+let sortState = {
+
+    column: null,
+
+    direction: null
+
+};
+
+
+
+/* =====================================================
+   SORT TABLE
+===================================================== */
+
+function sortTable(column) {
 
 
     const table =
-        document.getElementById("caseTable");
+        document.getElementById(
+            "caseTable"
+        );
 
 
     const tbody =
-        table.querySelector("tbody");
+        table.querySelector(
+            "tbody"
+        );
 
 
     const rows =
         Array.from(
-            tbody.querySelectorAll("tr")
+            tbody.querySelectorAll(
+                "tr"
+            )
         );
 
 
     /* =========================
-       CHANGE SORT ORDER
+       DETERMINE DIRECTION
     ========================= */
 
     if (
-        dateSortOrder === "none" ||
-        dateSortOrder === "desc"
+        sortState.column === column
     ) {
 
-        dateSortOrder = "asc";
+
+        if (
+            sortState.direction === "asc"
+        ) {
+
+            sortState.direction = "desc";
+
+        }
+
+        else {
+
+            sortState.direction = "asc";
+
+        }
 
     }
 
     else {
 
-        dateSortOrder = "desc";
+        sortState.column = column;
+
+        sortState.direction = "asc";
 
     }
+
+
+    /* =========================
+       REMOVE ALL SORT ICON ACTIVE
+    ========================= */
+
+    document.querySelectorAll(
+        ".sort-icon"
+    ).forEach(icon => {
+
+        icon.textContent = "↕";
+
+        icon.classList.remove(
+            "sort-active"
+        );
+
+    });
+
+
+    /* =========================
+       ACTIVE ICON
+    ========================= */
+
+    const activeIcon =
+        document.getElementById(
+            "sort-" + column
+        );
+
+
+    activeIcon.textContent =
+        sortState.direction === "asc"
+            ? "↑"
+            : "↓";
+
+
+    activeIcon.classList.add(
+        "sort-active"
+    );
 
 
     /* =========================
@@ -1043,65 +1251,129 @@ function sortByRegisterDate() {
     rows.sort((a, b) => {
 
 
-        const dateA =
-            a.cells[0]
-                .textContent
-                .trim();
+        let valueA;
+        let valueB;
 
 
-        const dateB =
-            b.cells[0]
-                .textContent
-                .trim();
-
-
-        const [
-            dayA,
-            monthA,
-            yearA
-        ] = dateA.split("/");
-
-
-        const [
-            dayB,
-            monthB,
-            yearB
-        ] = dateB.split("/");
-
-
-        const timeA = new Date(
-
-            parseInt(yearA) - 543,
-
-            parseInt(monthA) - 1,
-
-            parseInt(dayA)
-
-        );
-
-
-        const timeB = new Date(
-
-            parseInt(yearB) - 543,
-
-            parseInt(monthB) - 1,
-
-            parseInt(dayB)
-
-        );
-
+        /* =========================
+           REGISTER DATE
+        ========================= */
 
         if (
-            dateSortOrder === "asc"
+            column === "registerDate"
         ) {
 
-            return timeA - timeB;
+            valueA =
+                parseThaiDate(
+                    a.cells[0]
+                        .textContent
+                        .trim()
+                );
+
+
+            valueB =
+                parseThaiDate(
+                    b.cells[0]
+                        .textContent
+                        .trim()
+                );
+
+        }
+
+
+        /* =========================
+           REQUEST COUNT
+        ========================= */
+
+        else if (
+            column === "requestCount"
+        ) {
+
+            valueA =
+                parseInt(
+                    a.cells[4]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+
+            valueB =
+                parseInt(
+                    b.cells[4]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+        }
+
+
+        /* =========================
+           CASE AGING
+        ========================= */
+
+        else if (
+            column === "caseAging"
+        ) {
+
+            valueA =
+                parseInt(
+                    a.cells[5]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+
+            valueB =
+                parseInt(
+                    b.cells[5]
+                        .textContent
+                        .trim()
+                ) || 0;
+
+        }
+
+
+        /* =========================
+           LAST UPDATE
+        ========================= */
+
+        else if (
+            column === "lastUpdate"
+        ) {
+
+            valueA =
+                parseThaiDateTime(
+                    a.cells[6]
+                        .textContent
+                        .trim()
+                );
+
+
+            valueB =
+                parseThaiDateTime(
+                    b.cells[6]
+                        .textContent
+                        .trim()
+                );
+
+        }
+
+
+        /* =========================
+           SORT
+        ========================= */
+
+        if (
+            sortState.direction === "asc"
+        ) {
+
+            return valueA - valueB;
 
         }
 
         else {
 
-            return timeB - timeA;
+            return valueB - valueA;
 
         }
 
@@ -1109,7 +1381,7 @@ function sortByRegisterDate() {
 
 
     /* =========================
-       RE-APPEND SORTED ROWS
+       RE-APPEND ROWS
     ========================= */
 
     rows.forEach(row => {
@@ -1118,30 +1390,99 @@ function sortByRegisterDate() {
 
     });
 
-
-    /* =========================
-       UPDATE ICON
-    ========================= */
-
-    const icon =
-        document.getElementById(
-            "dateSortIcon"
-        );
+}
 
 
-    if (
-        dateSortOrder === "asc"
-    ) {
 
-        icon.textContent = "↑";
+/* =====================================================
+   PARSE THAI DATE
+   DD/MM/YYYY
+===================================================== */
 
-    }
+function parseThaiDate(dateString) {
 
-    else {
 
-        icon.textContent = "↓";
+    const parts =
+        dateString.split("/");
 
-    }
+
+    const day =
+        parseInt(parts[0]);
+
+
+    const month =
+        parseInt(parts[1]);
+
+
+    const year =
+        parseInt(parts[2]) - 543;
+
+
+    return new Date(
+        year,
+        month - 1,
+        day
+    ).getTime();
+
+}
+
+
+
+/* =====================================================
+   PARSE THAI DATE TIME
+   DD/MM/YYYY HH:MM
+===================================================== */
+
+function parseThaiDateTime(dateString) {
+
+
+    const parts =
+        dateString.split(" ");
+
+
+    const datePart =
+        parts[0];
+
+
+    const timePart =
+        parts[1] || "00:00";
+
+
+    const date =
+        datePart.split("/");
+
+
+    const time =
+        timePart.split(":");
+
+
+    const day =
+        parseInt(date[0]);
+
+
+    const month =
+        parseInt(date[1]);
+
+
+    const year =
+        parseInt(date[2]) - 543;
+
+
+    const hour =
+        parseInt(time[0]) || 0;
+
+
+    const minute =
+        parseInt(time[1]) || 0;
+
+
+    return new Date(
+        year,
+        month - 1,
+        day,
+        hour,
+        minute
+    ).getTime();
 
 }
 
