@@ -587,7 +587,7 @@
                             Review Date (กด hold ใน LOS)
                         </label>
 
-                        <div id="holdDate">
+                        <div id="reviewDate">
                             15/08/2569 09:35
                         </div>
 
@@ -600,7 +600,7 @@
                             Case Aging
                         </label>
 
-                        <div id="aging">
+                        <div id="caseAging">
                             2 Days
                         </div>
 
@@ -631,28 +631,41 @@
                         </div>
 
                     </div>
+
+
+                    <!-- =========================
+                         Dynamic Status Date
+                    ========================= -->
+
                     <div class="info-item">
 
-                        <label>
+                        <label id="statusDateLabel">
                             Submit Date
                         </label>
 
-                        <div id="holdDate">
+                        <div id="statusDate">
                             15/08/2569 09:35
                         </div>
 
                     </div>
+
+
+                    <!-- =========================
+                         Dynamic Status Aging
+                    ========================= -->
+
                     <div class="info-item">
 
-                        <label>
+                        <label id="statusAgingLabel">
                             Submit Aging
                         </label>
 
-                        <div id="aging">
+                        <div id="statusAging">
                             2 Days
                         </div>
 
                     </div>
+
 
                 </div>
 
@@ -1162,10 +1175,8 @@
 
         function setStatus(status) {
 
-
             const steps =
                 document.querySelectorAll('.status-step');
-
 
             const lines =
                 document.querySelectorAll('.status-line');
@@ -1188,7 +1199,6 @@
                 line.classList.remove('completed');
 
             });
-
 
 
             /* =========================
@@ -1216,7 +1226,6 @@
             });
 
 
-
             /* =========================
                Update Status Lines
             ========================= */
@@ -1232,18 +1241,15 @@
             });
 
 
-
             /* =========================
                Update Sidebar
             ========================= */
 
             const menuItems = [
-
                 'menu-new',
                 'menu-requested',
                 'menu-submitted',
                 'menu-done'
-
             ];
 
 
@@ -1259,7 +1265,6 @@
             document
                 .getElementById(menuItems[status - 1])
                 .classList.add('active');
-
 
 
             /* =========================
@@ -1298,6 +1303,28 @@
 
 
         /* =========================
+           Dynamic Status Date / Aging
+        ========================= */
+
+        function updateStatusInfo(dateLabel, dateValue, agingLabel, agingValue) {
+
+            document.getElementById("statusDateLabel").textContent =
+                dateLabel;
+
+            document.getElementById("statusDate").textContent =
+                dateValue;
+
+            document.getElementById("statusAgingLabel").textContent =
+                agingLabel;
+
+            document.getElementById("statusAging").textContent =
+                agingValue;
+
+        }
+
+
+
+        /* =========================
            New
         ========================= */
 
@@ -1315,10 +1342,10 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-            document.getElementById("holdDate").textContent =
+            document.getElementById("reviewDate").textContent =
                 "15/08/2569 09:35";
 
-            document.getElementById("aging").textContent =
+            document.getElementById("caseAging").textContent =
                 "1 Day";
 
             document.getElementById("requestCount").textContent =
@@ -1326,6 +1353,17 @@
 
             document.getElementById("submissionCount").textContent =
                 "00";
+
+
+            /* Dynamic fields */
+
+            updateStatusInfo(
+                "New Date",
+                "14/08/2569 12:04",
+                "New Aging",
+                "0 Day"
+            );
+
 
             clearDocuments();
 
@@ -1354,10 +1392,10 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-            document.getElementById("holdDate").textContent =
+            document.getElementById("reviewDate").textContent =
                 "15/08/2569 09:35";
 
-            document.getElementById("aging").textContent =
+            document.getElementById("caseAging").textContent =
                 "2 Days";
 
             document.getElementById("requestCount").textContent =
@@ -1365,6 +1403,17 @@
 
             document.getElementById("submissionCount").textContent =
                 "00";
+
+
+            /* Dynamic fields */
+
+            updateStatusInfo(
+                "Request Date",
+                "15/08/2569 09:35",
+                "Request Aging",
+                "2 Days"
+            );
+
 
             clearDocuments();
 
@@ -1405,10 +1454,10 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-            document.getElementById("holdDate").textContent =
+            document.getElementById("reviewDate").textContent =
                 "15/08/2569 09:35";
 
-            document.getElementById("aging").textContent =
+            document.getElementById("caseAging").textContent =
                 "2 Days";
 
             document.getElementById("requestCount").textContent =
@@ -1416,6 +1465,17 @@
 
             document.getElementById("submissionCount").textContent =
                 "01";
+
+
+            /* Dynamic fields */
+
+            updateStatusInfo(
+                "Submit Date",
+                "15/08/2569 14:08",
+                "Submit Aging",
+                "2 Days"
+            );
+
 
             clearDocuments();
 
@@ -1456,10 +1516,10 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-            document.getElementById("holdDate").textContent =
+            document.getElementById("reviewDate").textContent =
                 "15/08/2569 09:35";
 
-            document.getElementById("aging").textContent =
+            document.getElementById("caseAging").textContent =
                 "2 Days";
 
             document.getElementById("requestCount").textContent =
@@ -1467,6 +1527,17 @@
 
             document.getElementById("submissionCount").textContent =
                 "01";
+
+
+            /* Dynamic fields */
+
+            updateStatusInfo(
+                "Done Date",
+                "16/08/2569 18:08",
+                "Done Aging",
+                "3 Days"
+            );
+
 
             clearDocuments();
 
@@ -1572,6 +1643,11 @@
 
         }
 
+
+        /* =========================
+           Default Status
+           3 = Submitted
+        ========================= */
 
         setStatus(3);
 
