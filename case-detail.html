@@ -21,10 +21,6 @@
         }
 
 
-        /* =========================
-           Sidebar
-        ========================= */
-
         .sidebar {
             width: 240px;
             height: 100vh;
@@ -52,10 +48,6 @@
         }
 
 
-        /* =========================
-           Main
-        ========================= */
-
         .main {
             margin-left: 240px;
             padding: 30px;
@@ -69,10 +61,6 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
-
-        /* =========================
-           Case Detail
-        ========================= */
 
         .info-grid {
             display: grid;
@@ -102,9 +90,6 @@
         }
 
 
-        /* =========================
-           Table
-        ========================= */
 
         table {
             width: 100%;
@@ -137,10 +122,6 @@
         }
 
 
-        /* =========================
-           Note
-        ========================= */
-
         .note-box {
             width: 100%;
             height: 100px;
@@ -150,10 +131,6 @@
             resize: none;
         }
 
-
-        /* =========================
-           Buttons
-        ========================= */
 
         .button-group {
             display: flex;
@@ -606,7 +583,7 @@
                     <div class="info-item">
 
                         <label>
-                            Aging (นับตั้งแต่ hold ตาม Calendar)
+                            Case Aging
                         </label>
 
                         <div id="aging">
@@ -639,6 +616,27 @@
                             00
                         </div>
 
+                    </div>
+
+                    <div class="info-item">
+
+                        <label>
+                            Last Update
+                        </label>
+
+                        <div id="holdDate">
+                            15/08/2569 09:35
+                        </div>
+		    </div>
+                    <div class="info-item">
+
+                        <label>
+                            Status Aging
+                        </label>
+
+                        <div id="aging">
+                            1 Day
+                        </div>
                     </div>
 
 
@@ -1624,12 +1622,6 @@
         }
 
 
-
-        /* =========================
-           Initial Status
-        ========================= */
-
-        // เริ่มต้นที่ New
 
         setStatus(1);
 
