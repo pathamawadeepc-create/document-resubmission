@@ -2,7 +2,6 @@
 <html lang="th">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -126,12 +125,24 @@
             border-radius: 6px;
             background: #fff;
             font-size: 10px;
-            cursor: pointer;
         }
 
 
         /* =========================
-           Requested Documents
+           Note
+        ========================= */
+
+        .note-box {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            resize: none;
+        }
+
+
+        /* =========================
            Read Only
         ========================= */
 
@@ -151,20 +162,6 @@
 
         .readonly label {
             color: #555;
-        }
-
-
-        /* =========================
-           Note
-        ========================= */
-
-        .note-box {
-            width: 100%;
-            height: 100px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            resize: none;
         }
 
         .note-box.readonly {
@@ -209,10 +206,6 @@
         .btn-blue {
             background: #2563eb;
         }
-
-        /* =========================
-           Disabled Button
-        ========================= */
 
         .btn:disabled {
             opacity: 0.5;
@@ -690,14 +683,17 @@
                     </div>
 
 
-                    <!-- Request Date -->
+                    <!-- =========================
+                         Status Date
+                    ========================= -->
 
                     <div
                         class="info-item"
                         id="statusDateItem"
+                        style="display: none;"
                     >
 
-                        <label>
+                        <label id="statusDateLabel">
                             Request Date
                         </label>
 
@@ -708,14 +704,17 @@
                     </div>
 
 
-                    <!-- Request Aging -->
+                    <!-- =========================
+                         Status Aging
+                    ========================= -->
 
                     <div
                         class="info-item"
                         id="statusAgingItem"
+                        style="display: none;"
                     >
 
-                        <label>
+                        <label id="statusAgingLabel">
                             Request Aging
                         </label>
 
@@ -726,7 +725,9 @@
                     </div>
 
 
-                    <!-- Owner -->
+                    <!-- =========================
+                         Owner
+                    ========================= -->
 
                     <div
                         class="info-item"
@@ -1014,6 +1015,7 @@
 
                             </tr>
 
+
                         </tbody>
 
                     </table>
@@ -1043,6 +1045,7 @@
                     ></textarea>
 
                 </div>
+
 
             </div>
 
@@ -1384,7 +1387,7 @@
 
 
             /* =========================
-               Read Only Control
+               Read Only
             ========================= */
 
             setReadOnly(status === 4);
@@ -1414,10 +1417,6 @@
                 document.getElementById("requestBtn");
 
 
-            /* =========================
-               Requested Documents
-            ========================= */
-
             const checkboxes =
                 documentSection.querySelectorAll(
                     'input[type="checkbox"]'
@@ -1428,6 +1427,10 @@
                     'select'
                 );
 
+
+            /* =========================
+               Requested Documents
+            ========================= */
 
             checkboxes.forEach(item => {
 
@@ -1460,7 +1463,7 @@
 
 
             /* =========================
-               Visual Read Only
+               Visual
             ========================= */
 
             if (isReadOnly) {
@@ -1521,11 +1524,13 @@
 
 
             /* =========================
-               New ไม่มี Request Date /
-               Request Aging
+               New ไม่มี Status Date /
+               Status Aging
             ========================= */
 
             setStatusInfo(
+                "",
+                "",
                 "",
                 "",
                 false
@@ -1586,10 +1591,13 @@
 
 
             /* =========================
-               Request Date / Request Aging
+               Request Date /
+               Request Aging
             ========================= */
 
             setStatusInfo(
+                "Request Date",
+                "Request Aging",
                 "15/08/2569 09:35",
                 "1 Day",
                 true
@@ -1662,10 +1670,13 @@
 
 
             /* =========================
-               Request Date / Request Aging
+               Submission Date /
+               Submission Aging
             ========================= */
 
             setStatusInfo(
+                "Submission Date",
+                "Submission Aging",
                 "16/08/2569 18:08",
                 "0 Day",
                 true
@@ -1738,10 +1749,13 @@
 
 
             /* =========================
-               Request Date / Request Aging
+               Complete Date /
+               Complete Aging
             ========================= */
 
             setStatusInfo(
+                "Complete Date",
+                "Complete Aging",
                 "16/08/2569 18:08",
                 "0 Day",
                 true
@@ -1771,10 +1785,16 @@
 
 
         /* =========================
-           Request Date / Request Aging
+           Status Date / Status Aging
+           
+           Logic:
+           New = ไม่แสดง Card
+           Requested / Submitted / Done = แสดง
         ========================= */
 
         function setStatusInfo(
+            dateLabel,
+            agingLabel,
             dateValue,
             agingValue,
             showField
@@ -1789,15 +1809,15 @@
 
             /* =========================
                New
+               
+               ไม่แสดงทั้ง 2 field
+               และไม่มี Card
             ========================= */
 
-            if (showField === false) {
+            if (showField !== true) {
 
-                dateItem.style.display =
-                    "none";
-
-                agingItem.style.display =
-                    "none";
+                dateItem.style.display = "none";
+                agingItem.style.display = "none";
 
                 return;
 
@@ -1805,15 +1825,31 @@
 
 
             /* =========================
-               Requested / Submitted / Done
+               Requested /
+               Submitted /
+               Done
+               
+               แสดงทั้ง 2 field
             ========================= */
 
-            dateItem.style.display =
-                "block";
+            dateItem.style.display = "block";
+            agingItem.style.display = "block";
 
-            agingItem.style.display =
-                "block";
 
+            /* =========================
+               Dynamic Label
+            ========================= */
+
+            document.getElementById("statusDateLabel").textContent =
+                dateLabel;
+
+            document.getElementById("statusAgingLabel").textContent =
+                agingLabel;
+
+
+            /* =========================
+               Dynamic Value
+            ========================= */
 
             document.getElementById("statusDate").textContent =
                 dateValue;
