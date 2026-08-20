@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 
@@ -528,6 +529,8 @@
                 <div class="info-grid">
 
 
+                    <!-- Register Date -->
+
                     <div class="info-item">
 
                         <label>
@@ -540,6 +543,8 @@
 
                     </div>
 
+
+                    <!-- Customer No -->
 
                     <div class="info-item">
 
@@ -554,6 +559,8 @@
                     </div>
 
 
+                    <!-- Customer Name -->
+
                     <div class="info-item">
 
                         <label>
@@ -566,6 +573,8 @@
 
                     </div>
 
+
+                    <!-- Phone Number -->
 
                     <div class="info-item">
 
@@ -580,6 +589,11 @@
                     </div>
 
 
+                   
+
+
+                    <!-- Create Date -->
+
                     <div class="info-item">
 
                         <label>
@@ -593,6 +607,8 @@
                     </div>
 
 
+                    <!-- Case Aging -->
+
                     <div class="info-item">
 
                         <label>
@@ -600,11 +616,13 @@
                         </label>
 
                         <div id="aging">
-                            1 Days
+                            1 Day
                         </div>
 
                     </div>
 
+
+                    <!-- Request Count -->
 
                     <div class="info-item">
 
@@ -618,6 +636,8 @@
 
                     </div>
 
+
+                    <!-- Submission Count -->
 
                     <div class="info-item">
 
@@ -633,7 +653,7 @@
 
 
                     <!-- =========================
-                         Dynamic Status Date
+                         Request Date
                     ========================= -->
 
                     <div
@@ -641,7 +661,7 @@
                         id="statusDateItem"
                     >
 
-                        <label id="statusDateLabel">
+                        <label>
                             Request Date
                         </label>
 
@@ -653,7 +673,7 @@
 
 
                     <!-- =========================
-                         Dynamic Status Aging
+                         Request Aging
                     ========================= -->
 
                     <div
@@ -661,7 +681,7 @@
                         id="statusAgingItem"
                     >
 
-                        <label id="statusAgingLabel">
+                        <label>
                             Request Aging
                         </label>
 
@@ -670,7 +690,24 @@
                         </div>
 
                     </div>
+		 <!-- =========================
+                         Owner
+                    ========================= -->
 
+                    <div
+                        class="info-item"
+                        id="ownerItem"
+                    >
+
+                        <label>
+                            Owner
+                        </label>
+
+                        <div id="owner">
+                            Agent001
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -1340,12 +1377,20 @@
                 "00";
 
 
-            /*
-             * New ไม่มี Status Date / Aging
-             */
+            /* =========================
+               New ไม่มี Owner
+            ========================= */
+
+            document.getElementById("ownerItem").style.display =
+                "none";
+
+
+            /* =========================
+               New ไม่มี Request Date /
+               Request Aging
+            ========================= */
+
             setStatusInfo(
-                "",
-                "",
                 "",
                 "",
                 false
@@ -1380,6 +1425,18 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
+
+            /* =========================
+               Requested มี Owner
+            ========================= */
+
+            document.getElementById("ownerItem").style.display =
+                "block";
+
+            document.getElementById("owner").textContent =
+                "Agent001";
+
+
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
 
@@ -1393,9 +1450,11 @@
                 "00";
 
 
+            /* =========================
+               Request Date / Request Aging
+            ========================= */
+
             setStatusInfo(
-                "Request Date",
-                "Request Aging",
                 "15/08/2569 09:35",
                 "1 Day",
                 true
@@ -1442,6 +1501,18 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
+
+            /* =========================
+               Submitted มี Owner
+            ========================= */
+
+            document.getElementById("ownerItem").style.display =
+                "block";
+
+            document.getElementById("owner").textContent =
+                "Agent001";
+
+
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
 
@@ -1455,9 +1526,12 @@
                 "01";
 
 
+            /* =========================
+               ยังคงใช้ Request Date /
+               Request Aging
+            ========================= */
+
             setStatusInfo(
-                "Submission Date",
-                "Submission Aging",
                 "16/08/2569 18:08",
                 "0 Day",
                 true
@@ -1504,6 +1578,18 @@
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
+
+            /* =========================
+               Done มี Owner
+            ========================= */
+
+            document.getElementById("ownerItem").style.display =
+                "block";
+
+            document.getElementById("owner").textContent =
+                "Agent001";
+
+
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
 
@@ -1517,9 +1603,12 @@
                 "01";
 
 
+            /* =========================
+               ยังคงใช้ Request Date /
+               Request Aging
+            ========================= */
+
             setStatusInfo(
-                "Completion Date",
-                "Completion Aging",
                 "16/08/2569 18:08",
                 "0 Day",
                 true
@@ -1549,12 +1638,10 @@
 
 
         /* =========================
-           Dynamic Status Date / Aging
+           Request Date / Request Aging
         ========================= */
 
         function setStatusInfo(
-            dateLabel,
-            agingLabel,
             dateValue,
             agingValue,
             showField
@@ -1567,35 +1654,33 @@
                 document.getElementById("statusAgingItem");
 
 
-            /*
-             * ถ้าเป็น New
-             * ให้ซ่อนทั้ง 2 field
-             */
+            /* =========================
+               New
+            ========================= */
+
             if (showField === false) {
 
-                dateItem.style.display = "none";
+                dateItem.style.display =
+                    "none";
 
-                agingItem.style.display = "none";
+                agingItem.style.display =
+                    "none";
 
                 return;
 
             }
 
 
-            /*
-             * Status อื่น ๆ
-             * ให้แสดงทั้ง 2 field
-             */
-            dateItem.style.display = "block";
+            /* =========================
+               Requested / Submitted / Done
+            ========================= */
 
-            agingItem.style.display = "block";
+            dateItem.style.display =
+                "block";
 
+            agingItem.style.display =
+                "block";
 
-            document.getElementById("statusDateLabel").textContent =
-                dateLabel;
-
-            document.getElementById("statusAgingLabel").textContent =
-                agingLabel;
 
             document.getElementById("statusDate").textContent =
                 dateValue;
@@ -1704,3 +1789,4 @@
 </body>
 
 </html>
+```
