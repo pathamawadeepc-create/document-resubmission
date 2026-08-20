@@ -63,13 +63,15 @@ body {
 
 
 /* =========================
-   TABLE WRAP
+   PAGE TITLE
 ========================= */
 
-.table-wrap {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    margin: 0;
 }
 
 
@@ -78,13 +80,22 @@ body {
 ========================= */
 
 .table-header {
+    background: #fff;
+
+    padding: 20px;
+
+    border-radius: 10px 10px 0 0;
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
-    margin-bottom: 15px;
+
+    gap: 20px;
 }
 
-.table-header h2 {
+.table-header h3 {
     margin: 0;
 }
 
@@ -95,19 +106,23 @@ body {
 
 .filter-group {
     display: flex;
-    gap: 8px;
+
     align-items: center;
+
+    gap: 8px;
 }
 
 
 /* =========================
-   FILTER DROPDOWN
+   SEARCH FIELD DROPDOWN
 ========================= */
 
-.filter-field {
+.search-field {
+
     padding: 9px 12px;
 
     border: 1px solid #ddd;
+
     border-radius: 6px;
 
     background: #fff;
@@ -115,13 +130,10 @@ body {
     font-size: 10px;
 
     cursor: pointer;
+
+    min-width: 160px;
+
     outline: none;
-
-    min-width: 145px;
-}
-
-.filter-field:focus {
-    border-color: #2563eb;
 }
 
 
@@ -130,11 +142,13 @@ body {
 ========================= */
 
 .search-input {
+
     width: 250px;
 
     padding: 9px 12px;
 
     border: 1px solid #ddd;
+
     border-radius: 6px;
 
     font-size: 10px;
@@ -143,32 +157,41 @@ body {
 }
 
 .search-input:focus {
+
     border-color: #2563eb;
+
 }
 
 
 /* =========================
-   CLEAR BUTTON
+   CLEAR FILTER
 ========================= */
 
 .clear-btn {
+
     padding: 9px 14px;
 
     border: 1px solid #dc2626;
+
     border-radius: 6px;
 
     background: #fff;
+
     color: #dc2626;
 
     font-size: 10px;
+
     font-weight: 600;
 
     cursor: pointer;
 }
 
 .clear-btn:hover {
+
     background: #dc2626;
+
     color: #fff;
+
 }
 
 
@@ -176,18 +199,34 @@ body {
    TABLE
 ========================= */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.table-wrap {
+
+    background: #fff;
+
+    padding: 0 20px 20px 20px;
+
+    border-radius: 0 0 10px 10px;
 }
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
 
 th,
 td {
+
     padding: 12px;
 
     border-bottom: 1px solid #eee;
 
     text-align: left;
+
 }
 
 
@@ -196,18 +235,29 @@ td {
 ========================= */
 
 .sortable {
+
     cursor: pointer;
+
     user-select: none;
+
 }
+
 
 .sortable:hover {
+
     background: #f3f4f6;
+
 }
 
+
 .sort-icon {
-    font-size: 11px;
+
+    font-size: 12px;
+
     margin-left: 5px;
+
     color: #666;
+
 }
 
 
@@ -216,29 +266,47 @@ td {
 ========================= */
 
 .badge {
+
     padding: 5px 10px;
+
     border-radius: 20px;
+
     font-size: 12px;
+
 }
+
 
 .new {
+
     background: #dbeafe;
+
     color: #1d4ed8;
+
 }
+
 
 .req {
+
     background: #fef3c7;
+
     color: #92400e;
+
 }
+
 
 .sub {
+
     background: #dcfce7;
+
     color: #166534;
+
 }
 
+
 .done {
+
     background: #e5e7eb;
-    color: #374151;
+
 }
 
 
@@ -246,8 +314,36 @@ td {
    LINK
 ========================= */
 
-a {
+td a {
+
     color: #2563eb;
+
+    text-decoration: none;
+
+}
+
+
+td a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================
+   NO RESULT
+========================= */
+
+.no-result {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #777;
+
 }
 
 
@@ -255,16 +351,30 @@ a {
    RESPONSIVE
 ========================= */
 
-@media (max-width: 1000px) {
-
-    .filter-group {
-        flex-wrap: wrap;
-    }
+@media (max-width: 1100px) {
 
     .table-header {
+
         flex-direction: column;
+
         align-items: flex-start;
-        gap: 15px;
+
+    }
+
+
+    .filter-group {
+
+        width: 100%;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .search-input {
+
+        width: 220px;
+
     }
 
 }
