@@ -141,29 +141,6 @@
             resize: none;
         }
 
-        /* =========================
-           Read-only Fields
-        ========================= */
-
-        .readonly-field {
-            background: #f3f4f6 !important;
-            color: #475569;
-            cursor: not-allowed;
-        }
-
-        .readonly-field:disabled {
-            opacity: 1;
-        }
-
-        .btn-readonly {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-readonly:disabled {
-            opacity: 0.5;
-        }
-
 
         /* =========================
            Buttons
@@ -452,7 +429,6 @@
 
             <div class="status-progress">
 
-
                 <!-- 1 New -->
 
                 <div
@@ -611,7 +587,7 @@
                         </label>
 
                         <div id="holdDate">
-                            15/08/2569 09:35
+                            16/08/2569 09:35
                         </div>
 
                     </div>
@@ -624,7 +600,7 @@
                         </label>
 
                         <div id="aging">
-                            2 Days
+                            1 Days
                         </div>
 
                     </div>
@@ -654,28 +630,47 @@
                         </div>
 
                     </div>
-                    <div class="info-item">
 
-                        <label>
-                            Completed Date
+
+                    <!-- =========================
+                         Dynamic Status Date
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusDateItem"
+                    >
+
+                        <label id="statusDateLabel">
+                            Request Date
                         </label>
 
-                        <div id="holdDate">
-                            15/08/2569 09:35
+                        <div id="statusDate">
+                            15/08/2569 11:23
                         </div>
 
                     </div>
-                    <div class="info-item">
 
-                        <label>
-                            Complete Aging
+
+                    <!-- =========================
+                         Dynamic Status Aging
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusAgingItem"
+                    >
+
+                        <label id="statusAgingLabel">
+                            Request Aging
                         </label>
 
-                        <div id="aging">
-                            2 Days
+                        <div id="statusAging">
+                            1 Day
                         </div>
 
                     </div>
+
                 </div>
 
             </div>
@@ -734,7 +729,7 @@
                                             id="doc_statement"
                                             name="document"
                                             value="statement"
-                                         class="readonly-field" disabled>
+                                        >
 
                                         Statement
 
@@ -748,7 +743,7 @@
                                     <select
                                         id="reason_statement"
                                         name="reason_statement"
-                                     class="readonly-field" disabled>
+                                    >
 
                                         <option value="">
                                             -- Select Reason --
@@ -790,7 +785,7 @@
                                             id="doc_payslip"
                                             name="document"
                                             value="payslip"
-                                         class="readonly-field" disabled>
+                                        >
 
                                         สลิปเงินเดือน
 
@@ -804,7 +799,7 @@
                                     <select
                                         id="reason_payslip"
                                         name="reason_payslip"
-                                     class="readonly-field" disabled>
+                                    >
 
                                         <option value="">
                                             -- Select Reason --
@@ -846,7 +841,7 @@
                                             id="doc_bankbook"
                                             name="document"
                                             value="bankbook"
-                                         class="readonly-field" disabled>
+                                        >
 
                                         หน้าสมุดบัญชีธนาคาร
 
@@ -860,7 +855,7 @@
                                     <select
                                         id="reason_bankbook"
                                         name="reason_bankbook"
-                                     class="readonly-field" disabled>
+                                    >
 
                                         <option value="">
                                             -- Select Reason --
@@ -902,7 +897,7 @@
                                             id="doc_id_card"
                                             name="document"
                                             value="id_card"
-                                         class="readonly-field" disabled>
+                                        >
 
                                         สำเนาบัตรประชาชน
 
@@ -916,7 +911,7 @@
                                     <select
                                         id="reason_id_card"
                                         name="reason_id_card"
-                                     class="readonly-field" disabled>
+                                    >
 
                                         <option value="">
                                             -- Select Reason --
@@ -966,9 +961,8 @@
 
                     <textarea
                         id="caseNote"
-                        class="note-box readonly-field"
+                        class="note-box"
                         placeholder="เพิ่มหมายเหตุ..."
-                        readonly
                     ></textarea>
 
                 </div>
@@ -987,18 +981,16 @@
             <div class="button-group">
 
                 <button
-                    class="btn btn-red btn-readonly"
-                    type="button"
-                    disabled
+                    class="btn btn-red"
+                    onclick="resetForm()"
                 >
                     Cancel
                 </button>
 
 
                 <button
-                    class="btn btn-green btn-readonly"
-                    type="button"
-                    disabled
+                    class="btn btn-green"
+                    onclick="confirmRequest()"
                 >
                     Request
                 </button>
@@ -1015,9 +1007,7 @@
 
         <div id="history" class="tab-content">
 
-
             <div class="section">
-
 
                 <table>
 
@@ -1043,7 +1033,6 @@
 
 
                     <tbody>
-
 
                         <tr>
 
@@ -1129,7 +1118,6 @@
 
                         </tr>
 
-
                     </tbody>
 
                 </table>
@@ -1186,7 +1174,6 @@
         ========================= */
 
         function setStatus(status) {
-
 
             const steps =
                 document.querySelectorAll('.status-step');
@@ -1352,7 +1339,21 @@
             document.getElementById("submissionCount").textContent =
                 "00";
 
+
+            /*
+             * New ไม่มี Status Date / Aging
+             */
+            setStatusInfo(
+                "",
+                "",
+                "",
+                "",
+                false
+            );
+
+
             clearDocuments();
+
 
             document.getElementById("caseNote").value =
                 "";
@@ -1391,7 +1392,18 @@
             document.getElementById("submissionCount").textContent =
                 "00";
 
+
+            setStatusInfo(
+                "Request Date",
+                "Request Aging",
+                "15/08/2569 09:35",
+                "1 Day",
+                true
+            );
+
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1442,7 +1454,18 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+
+            setStatusInfo(
+                "Submission Date",
+                "Submission Aging",
+                "16/08/2569 18:08",
+                "0 Day",
+                true
+            );
+
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1493,7 +1516,18 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+
+            setStatusInfo(
+                "Completion Date",
+                "Completion Aging",
+                "16/08/2569 18:08",
+                "0 Day",
+                true
+            );
+
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1509,6 +1543,65 @@
 
             document.getElementById("caseNote").value =
                 "Case completed";
+
+        }
+
+
+
+        /* =========================
+           Dynamic Status Date / Aging
+        ========================= */
+
+        function setStatusInfo(
+            dateLabel,
+            agingLabel,
+            dateValue,
+            agingValue,
+            showField
+        ) {
+
+            const dateItem =
+                document.getElementById("statusDateItem");
+
+            const agingItem =
+                document.getElementById("statusAgingItem");
+
+
+            /*
+             * ถ้าเป็น New
+             * ให้ซ่อนทั้ง 2 field
+             */
+            if (showField === false) {
+
+                dateItem.style.display = "none";
+
+                agingItem.style.display = "none";
+
+                return;
+
+            }
+
+
+            /*
+             * Status อื่น ๆ
+             * ให้แสดงทั้ง 2 field
+             */
+            dateItem.style.display = "block";
+
+            agingItem.style.display = "block";
+
+
+            document.getElementById("statusDateLabel").textContent =
+                dateLabel;
+
+            document.getElementById("statusAgingLabel").textContent =
+                agingLabel;
+
+            document.getElementById("statusDate").textContent =
+                dateValue;
+
+            document.getElementById("statusAging").textContent =
+                agingValue;
 
         }
 
@@ -1547,9 +1640,6 @@
 
         function confirmRequest() {
 
-                        // Read-only page: Request is disabled.
-            return;
-
             const confirmed =
                 confirm(
                     "ยืนยันการส่งคำขอเอกสารเพิ่มเติมใช่หรือไม่?"
@@ -1571,9 +1661,6 @@
         ========================= */
 
         function resetForm() {
-
-                        // Read-only page: Cancel is disabled.
-            return;
 
             document
                 .querySelectorAll('input[type="checkbox"]')
@@ -1603,6 +1690,12 @@
 
         }
 
+
+
+        /* =========================
+           Default Status
+           Requested
+        ========================= */
 
         setStatus(4);
 
