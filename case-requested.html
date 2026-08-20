@@ -429,7 +429,6 @@
 
             <div class="status-progress">
 
-
                 <!-- 1 New -->
 
                 <div
@@ -597,7 +596,7 @@
                     <div class="info-item">
 
                         <label>
-                            Case Aging 
+                            Case Aging
                         </label>
 
                         <div id="aging">
@@ -633,7 +632,14 @@
                     </div>
 
 
-                    <div class="info-item">
+                    <!-- =========================
+                         Dynamic Status Date
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusDateItem"
+                    >
 
                         <label id="statusDateLabel">
                             Request Date
@@ -646,7 +652,14 @@
                     </div>
 
 
-                    <div class="info-item">
+                    <!-- =========================
+                         Dynamic Status Aging
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusAgingItem"
+                    >
 
                         <label id="statusAgingLabel">
                             Request Aging
@@ -657,6 +670,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </div>
@@ -993,9 +1007,7 @@
 
         <div id="history" class="tab-content">
 
-
             <div class="section">
-
 
                 <table>
 
@@ -1021,7 +1033,6 @@
 
 
                     <tbody>
-
 
                         <tr>
 
@@ -1107,7 +1118,6 @@
 
                         </tr>
 
-
                     </tbody>
 
                 </table>
@@ -1164,7 +1174,6 @@
         ========================= */
 
         function setStatus(status) {
-
 
             const steps =
                 document.querySelectorAll('.status-step');
@@ -1330,14 +1339,21 @@
             document.getElementById("submissionCount").textContent =
                 "00";
 
+
+            /*
+             * New ไม่มี Status Date / Aging
+             */
             setStatusInfo(
-                "New Date",
-                "New Aging",
-                "14/08/2569 12:04",
-                "1 Day"
+                "",
+                "",
+                "",
+                "",
+                false
             );
 
+
             clearDocuments();
+
 
             document.getElementById("caseNote").value =
                 "";
@@ -1376,14 +1392,18 @@
             document.getElementById("submissionCount").textContent =
                 "00";
 
+
             setStatusInfo(
                 "Request Date",
                 "Request Aging",
                 "15/08/2569 09:35",
-                "1 Day"
+                "1 Day",
+                true
             );
 
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1434,14 +1454,18 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+
             setStatusInfo(
                 "Submission Date",
                 "Submission Aging",
                 "16/08/2569 18:08",
-                "0 Day"
+                "0 Day",
+                true
             );
 
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1492,14 +1516,18 @@
             document.getElementById("submissionCount").textContent =
                 "01";
 
+
             setStatusInfo(
                 "Completion Date",
                 "Completion Aging",
                 "16/08/2569 18:08",
-                "0 Day"
+                "0 Day",
+                true
             );
 
+
             clearDocuments();
+
 
             document.getElementById("doc_statement").checked =
                 true;
@@ -1524,7 +1552,44 @@
            Dynamic Status Date / Aging
         ========================= */
 
-        function setStatusInfo(dateLabel, agingLabel, dateValue, agingValue) {
+        function setStatusInfo(
+            dateLabel,
+            agingLabel,
+            dateValue,
+            agingValue,
+            showField
+        ) {
+
+            const dateItem =
+                document.getElementById("statusDateItem");
+
+            const agingItem =
+                document.getElementById("statusAgingItem");
+
+
+            /*
+             * ถ้าเป็น New
+             * ให้ซ่อนทั้ง 2 field
+             */
+            if (showField === false) {
+
+                dateItem.style.display = "none";
+
+                agingItem.style.display = "none";
+
+                return;
+
+            }
+
+
+            /*
+             * Status อื่น ๆ
+             * ให้แสดงทั้ง 2 field
+             */
+            dateItem.style.display = "block";
+
+            agingItem.style.display = "block";
+
 
             document.getElementById("statusDateLabel").textContent =
                 dateLabel;
@@ -1537,7 +1602,9 @@
 
             document.getElementById("statusAging").textContent =
                 agingValue;
+
         }
+
 
 
         /* =========================
@@ -1622,6 +1689,13 @@
                 });
 
         }
+
+
+
+        /* =========================
+           Default Status
+           Requested
+        ========================= */
 
         setStatus(2);
 
