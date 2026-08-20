@@ -21,6 +21,10 @@
         }
 
 
+        /* =========================
+           Sidebar
+        ========================= */
+
         .sidebar {
             width: 240px;
             height: 100vh;
@@ -48,6 +52,10 @@
         }
 
 
+        /* =========================
+           Main
+        ========================= */
+
         .main {
             margin-left: 240px;
             padding: 30px;
@@ -61,6 +69,10 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
+
+        /* =========================
+           Case Detail
+        ========================= */
 
         .info-grid {
             display: grid;
@@ -80,16 +92,10 @@
             font-weight: 600;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            background: #dcfce7;
-            color: #166534;
-            font-size: 13px;
-        }
 
-
+        /* =========================
+           Table
+        ========================= */
 
         table {
             width: 100%;
@@ -122,6 +128,10 @@
         }
 
 
+        /* =========================
+           Note
+        ========================= */
+
         .note-box {
             width: 100%;
             height: 100px;
@@ -131,6 +141,10 @@
             resize: none;
         }
 
+
+        /* =========================
+           Buttons
+        ========================= */
 
         .button-group {
             display: flex;
@@ -415,11 +429,10 @@
 
             <div class="status-progress">
 
-
                 <!-- 1 New -->
 
                 <div
-                    class="status-step active"
+                    class="status-step"
                     onclick="setStatus(1)"
                 >
 
@@ -574,7 +587,7 @@
                         </label>
 
                         <div id="holdDate">
-                            15/08/2569 09:35
+                            16/08/2569 09:35
                         </div>
 
                     </div>
@@ -587,7 +600,7 @@
                         </label>
 
                         <div id="aging">
-                            1 Day
+                            1 Days
                         </div>
 
                     </div>
@@ -600,7 +613,7 @@
                         </label>
 
                         <div id="requestCount">
-                            00
+                            01
                         </div>
 
                     </div>
@@ -618,8 +631,45 @@
 
                     </div>
 
-        
 
+                    <!-- =========================
+                         Dynamic Status Date
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusDateItem"
+                    >
+
+                        <label id="statusDateLabel">
+                            Request Date
+                        </label>
+
+                        <div id="statusDate">
+                            15/08/2569 11:23
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Dynamic Status Aging
+                    ========================= -->
+
+                    <div
+                        class="info-item"
+                        id="statusAgingItem"
+                    >
+
+                        <label id="statusAgingLabel">
+                            Request Aging
+                        </label>
+
+                        <div id="statusAging">
+                            1 Day
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -957,9 +1007,7 @@
 
         <div id="history" class="tab-content">
 
-
             <div class="section">
-
 
                 <table>
 
@@ -985,7 +1033,6 @@
 
 
                     <tbody>
-
 
                         <tr>
 
@@ -1071,7 +1118,6 @@
 
                         </tr>
 
-
                     </tbody>
 
                 </table>
@@ -1129,7 +1175,6 @@
 
         function setStatus(status) {
 
-
             const steps =
                 document.querySelectorAll('.status-step');
 
@@ -1167,16 +1212,12 @@
                 const stepNumber = index + 1;
 
 
-                // Previous Status
-
                 if (stepNumber < status) {
 
                     step.classList.add('completed');
 
                 }
 
-
-                // Current Status
 
                 if (stepNumber === status) {
 
@@ -1218,8 +1259,6 @@
             ];
 
 
-            // Remove active from all status menus
-
             menuItems.forEach(id => {
 
                 document
@@ -1228,8 +1267,6 @@
 
             });
 
-
-            // Add active to selected status menu
 
             document
                 .getElementById(menuItems[status - 1])
@@ -1278,37 +1315,41 @@
 
         function loadNewData() {
 
-
             document.getElementById("registerDate").textContent =
                 "14/08/2569 12:04";
-
 
             document.getElementById("idCard").textContent =
                 "300000000x";
 
-
             document.getElementById("customerName").textContent =
                 "xxxxx xxxxx";
-
 
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
-
 
             document.getElementById("aging").textContent =
                 "1 Day";
 
-
             document.getElementById("requestCount").textContent =
                 "00";
 
-
             document.getElementById("submissionCount").textContent =
                 "00";
+
+
+            /*
+             * New ไม่มี Status Date / Aging
+             */
+            setStatusInfo(
+                "",
+                "",
+                "",
+                "",
+                false
+            );
 
 
             clearDocuments();
@@ -1327,37 +1368,38 @@
 
         function loadRequestedData() {
 
-
             document.getElementById("registerDate").textContent =
                 "14/08/2569 12:04";
-
 
             document.getElementById("idCard").textContent =
                 "300000000x";
 
-
             document.getElementById("customerName").textContent =
                 "xxxxx xxxxx";
-
 
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
-
 
             document.getElementById("aging").textContent =
                 "2 Days";
 
-
             document.getElementById("requestCount").textContent =
                 "01";
 
-
             document.getElementById("submissionCount").textContent =
                 "00";
+
+
+            setStatusInfo(
+                "Request Date",
+                "Request Aging",
+                "15/08/2569 09:35",
+                "1 Day",
+                true
+            );
 
 
             clearDocuments();
@@ -1366,18 +1408,14 @@
             document.getElementById("doc_statement").checked =
                 true;
 
-
             document.getElementById("reason_statement").value =
                 "unclear";
-
 
             document.getElementById("doc_payslip").checked =
                 true;
 
-
             document.getElementById("reason_payslip").value =
                 "incomplete";
-
 
             document.getElementById("caseNote").value =
                 "เอกสารไม่ชัดเจนและเอกสารไม่ครบถ้วน";
@@ -1392,37 +1430,38 @@
 
         function loadSubmittedData() {
 
-
             document.getElementById("registerDate").textContent =
                 "14/08/2569 12:04";
-
 
             document.getElementById("idCard").textContent =
                 "300000000x";
 
-
             document.getElementById("customerName").textContent =
                 "xxxxx xxxxx";
-
 
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
-
 
             document.getElementById("aging").textContent =
                 "2 Days";
 
-
             document.getElementById("requestCount").textContent =
                 "01";
 
-
             document.getElementById("submissionCount").textContent =
                 "01";
+
+
+            setStatusInfo(
+                "Submission Date",
+                "Submission Aging",
+                "16/08/2569 18:08",
+                "0 Day",
+                true
+            );
 
 
             clearDocuments();
@@ -1431,18 +1470,14 @@
             document.getElementById("doc_statement").checked =
                 true;
 
-
             document.getElementById("reason_statement").value =
                 "unclear";
-
 
             document.getElementById("doc_payslip").checked =
                 true;
 
-
             document.getElementById("reason_payslip").value =
                 "incomplete";
-
 
             document.getElementById("caseNote").value =
                 "ลูกค้าส่งเอกสารเพิ่มเติมแล้ว";
@@ -1457,37 +1492,38 @@
 
         function loadDoneData() {
 
-
             document.getElementById("registerDate").textContent =
                 "14/08/2569 12:04";
-
 
             document.getElementById("idCard").textContent =
                 "300000000x";
 
-
             document.getElementById("customerName").textContent =
                 "xxxxx xxxxx";
-
 
             document.getElementById("phoneNumber").textContent =
                 "xxx-xxx-xxxx";
 
-
             document.getElementById("holdDate").textContent =
                 "15/08/2569 09:35";
-
 
             document.getElementById("aging").textContent =
                 "2 Days";
 
-
             document.getElementById("requestCount").textContent =
                 "01";
 
-
             document.getElementById("submissionCount").textContent =
                 "01";
+
+
+            setStatusInfo(
+                "Completion Date",
+                "Completion Aging",
+                "16/08/2569 18:08",
+                "0 Day",
+                true
+            );
 
 
             clearDocuments();
@@ -1496,21 +1532,76 @@
             document.getElementById("doc_statement").checked =
                 true;
 
-
             document.getElementById("reason_statement").value =
                 "unclear";
-
 
             document.getElementById("doc_payslip").checked =
                 true;
 
-
             document.getElementById("reason_payslip").value =
                 "incomplete";
 
-
             document.getElementById("caseNote").value =
                 "Case completed";
+
+        }
+
+
+
+        /* =========================
+           Dynamic Status Date / Aging
+        ========================= */
+
+        function setStatusInfo(
+            dateLabel,
+            agingLabel,
+            dateValue,
+            agingValue,
+            showField
+        ) {
+
+            const dateItem =
+                document.getElementById("statusDateItem");
+
+            const agingItem =
+                document.getElementById("statusAgingItem");
+
+
+            /*
+             * ถ้าเป็น New
+             * ให้ซ่อนทั้ง 2 field
+             */
+            if (showField === false) {
+
+                dateItem.style.display = "none";
+
+                agingItem.style.display = "none";
+
+                return;
+
+            }
+
+
+            /*
+             * Status อื่น ๆ
+             * ให้แสดงทั้ง 2 field
+             */
+            dateItem.style.display = "block";
+
+            agingItem.style.display = "block";
+
+
+            document.getElementById("statusDateLabel").textContent =
+                dateLabel;
+
+            document.getElementById("statusAgingLabel").textContent =
+                agingLabel;
+
+            document.getElementById("statusDate").textContent =
+                dateValue;
+
+            document.getElementById("statusAging").textContent =
+                agingValue;
 
         }
 
@@ -1521,7 +1612,6 @@
         ========================= */
 
         function clearDocuments() {
-
 
             document
                 .querySelectorAll('input[type="checkbox"]')
@@ -1550,7 +1640,6 @@
 
         function confirmRequest() {
 
-
             const confirmed =
                 confirm(
                     "ยืนยันการส่งคำขอเอกสารเพิ่มเติมใช่หรือไม่?"
@@ -1572,7 +1661,6 @@
         ========================= */
 
         function resetForm() {
-
 
             document
                 .querySelectorAll('input[type="checkbox"]')
@@ -1603,6 +1691,11 @@
         }
 
 
+
+        /* =========================
+           Default Status
+           Requested
+        ========================= */
 
         setStatus(1);
 
